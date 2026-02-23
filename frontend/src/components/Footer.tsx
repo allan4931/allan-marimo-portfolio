@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react'
+import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useInView } from 'framer-motion'
 import { FiGithub, FiLinkedin, FiMail, FiPhone, FiArrowUpRight, FiMapPin, FiClock } from 'react-icons/fi'
@@ -348,7 +348,7 @@ export default function Footer() {
           <div>
             <div className="font-mono text-[10px] tracking-[0.35em] uppercase text-white/20 mb-6">Capabilities</div>
             <div className="space-y-2.5">
-              {capabilities.map((cap, i) => (
+              {capabilities.map((cap ) => (
                 <motion.div
                   key={cap}
                   className="flex items-center gap-2.5 text-xs text-white/35 group"
