@@ -1,22 +1,21 @@
-# Multi-stage build for frontend + backend
-FROM node:18 AS frontend-build
-WORKDIR /app/frontend
-COPY frontend/package*.json ./
-RUN npm install
-COPY frontend/ ./
-RUN npm run build
-
 FROM python:3.12-slim
+
 WORKDIR /app
 
-# Copy built frontend
-COPY --from=frontend-build /app/frontend/dist /app/frontend/dist
-
-# Copy backend
+# Copy requirements from backend folder
 COPY backend/requirements.txt .
+
+# Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the entire backend app folder
 COPY backend/app/ ./app/
 
-ENV PYTHONPATH=/app
+# Set Python path to include both root and app directory
+ENV PYTHONPATH=/app:/app/app
+
+# Expose FastAPI port
 EXPOSE 8000
+
+# Run with uvicorn
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "2"]
