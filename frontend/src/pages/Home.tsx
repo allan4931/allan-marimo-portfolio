@@ -70,7 +70,7 @@ const techLogos = [
 export default function Home() {
   const containerRef = useRef(null)
   const { scrollYProgress } = useScroll({ target: containerRef })
-  const y = useTransform(scrollYProgress, [0, 1], [0, -80])
+
 
   return (
     <PageTransition>
