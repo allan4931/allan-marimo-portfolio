@@ -1,5 +1,5 @@
-import { useEffect, useState, useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { useEffect, useState } from 'react'
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom'
 import { FiArrowRight, FiGithub, FiLinkedin } from 'react-icons/fi'
 import PageTransition from '../components/PageTransition'
@@ -68,13 +68,9 @@ const techLogos = [
 ]
 
 export default function Home() {
-  const containerRef = useRef(null)
-  const { scrollYProgress } = useScroll({ target: containerRef })
-
-
   return (
     <PageTransition>
-      <div ref={containerRef}>
+      <div>
         {/* HERO SECTION */}
         <section className="relative min-h-screen flex items-center overflow-hidden">
           {/* Background layers */}
