@@ -1,235 +1,151 @@
-# 🚀 Allan Marimo — Professional Portfolio
+# Allan Marimo — Portfolio v2.0
 
-> *"We build simplicity for users. Complexity is our responsibility."*
+> **"We build simplicity for users. Complexity is our responsibility."**
 
-A full-stack, production-ready professional portfolio and system showcase for **Allan Marimo** — Independent Software Engineer, System Architect & Cloud Specialist.
+A commercial-grade, animated personal portfolio — React 18 + TypeScript frontend,
+FastAPI backend, Docker Compose deployment, Nginx with SSL, and fully separate file
+structure ready for production.
 
 ---
 
-## 📁 Project Structure
+## 📁 Folder Structure
 
 ```
-allan-marimo-portfolio/
-├── frontend/               # React + TypeScript + Tailwind + Framer Motion
+allan-portfolio/
+├── frontend/                    # React + TypeScript + Vite
 │   ├── src/
-│   │   ├── components/     # Navbar, Footer, LoadingScreen, CustomCursor, PageTransition
-│   │   ├── pages/          # Home, Skills, Contact
-│   │   └── index.css       # Global styles + glass morphism utilities
+│   │   ├── assets/svg/          # 3D SVG illustrations
+│   │   │   ├── coder-3d.svg     # Side-lit developer at workstation
+│   │   │   ├── laptop-3d.svg    # Floating 3D laptop
+│   │   │   ├── server-3d.svg    # Server rack with live LEDs
+│   │   │   └── skill-globe.svg  # Tech skill globe
+│   │   ├── components/
+│   │   │   ├── Cursor.tsx       # Custom magnetic cursor
+│   │   │   ├── Cursor.css
+│   │   │   ├── Navbar.tsx       # Animated sticky header
+│   │   │   ├── Navbar.css
+│   │   │   ├── ParticleCanvas.tsx  # Gold particle network
+│   │   │   ├── Footer.tsx
+│   │   │   └── Footer.css
+│   │   ├── hooks/
+│   │   │   ├── useScrollReveal.ts  # IntersectionObserver reveal
+│   │   │   └── useCounter.ts       # Animated number counter
+│   │   ├── pages/
+│   │   │   ├── Home.tsx + Home.css
+│   │   │   ├── Skills.tsx + Skills.css
+│   │   │   └── Contact.tsx + Contact.css
+│   │   ├── styles/
+│   │   │   ├── global.css       # Design tokens, reset, buttons
+│   │   │   └── animations.css   # Keyframes, scroll reveal classes
+│   │   ├── App.tsx
+│   │   └── main.tsx
+│   ├── index.html
+│   ├── package.json
+│   ├── vite.config.ts
+│   ├── tsconfig.json
 │   ├── Dockerfile
-│   ├── nginx.conf
-│   └── package.json
+│   └── nginx-spa.conf
 │
-├── backend/                # FastAPI Python backend
-│   ├── app/
-│   │   ├── main.py         # FastAPI app + CORS + router registration
-│   │   ├── routers/
-│   │   │   └── contact.py  # POST /api/contact endpoint
-│   │   ├── services/
-│   │   │   └── email_service.py  # Gmail SMTP email sender
-│   │   └── models/
-│   │       └── contact.py  # Pydantic request model
+├── backend/                     # FastAPI Python
+│   ├── main.py                  # API + contact form endpoint
 │   ├── requirements.txt
-│   ├── .env.example
 │   └── Dockerfile
 │
 ├── nginx/
-│   └── portfolio.conf      # VPS Nginx reverse proxy config
+│   └── nginx.conf               # Reverse proxy + SSL config
 │
 ├── docker-compose.yml
+├── .env.example
 ├── .gitignore
 └── README.md
 ```
 
 ---
 
-## ⚡ Quick Start (Local Development)
+## 🚀 Local Development
 
-### 1. Clone & setup
-
-```bash
-git clone https://github.com/allan4931/allan-marimo-portfolio.git
-cd allan-marimo-portfolio
-```
-
-### 2. Frontend
-
+### Frontend
 ```bash
 cd frontend
 npm install
 npm run dev
-# → Runs on http://localhost:3000
+# → http://localhost:3000
 ```
 
-### 3. Backend
-
+### Backend
 ```bash
 cd backend
 python -m venv venv
 source venv/bin/activate        # Windows: venv\Scripts\activate
 pip install -r requirements.txt
-
-# Set up environment variables
-cp .env.example .env
-# Edit .env with your Gmail App Password
-
-uvicorn app.main:app --reload --port 8000
-# → Runs on http://localhost:8000
-```
-
-### 4. Visit
-- Frontend: http://localhost:3000
-- API Docs: http://localhost:8000/docs
-
----
-
-## 🔑 Email Setup (Gmail App Password)
-
-To enable the contact form to send emails:
-
-1. Go to your Google Account → **Security**
-2. Enable **2-Step Verification**
-3. Go to **App Passwords** → Generate one for "Mail"
-4. Copy the 16-character password
-5. Add to `backend/.env`:
-
-```env
-SMTP_USER=allanmarimo455@gmail.com
-SMTP_PASS=your_16_char_app_password
-OWNER_EMAIL=allanmarimo455@gmail.com
+cp ../.env.example ../.env      # fill in your values
+uvicorn main:app --reload --port 8000
+# → http://localhost:8000/docs
 ```
 
 ---
 
-## 🐳 Docker Deployment
+## 🐳 Production Deployment (VPS)
 
+### 1. Server setup
 ```bash
-# Build and run everything
-cd allan-marimo-portfolio
-
-# Copy and fill your .env
-cp backend/.env.example backend/.env
-# → Edit backend/.env
-
-# Launch
-docker compose up -d --build
-
-# Check logs
-docker compose logs -f
-```
-
----
-
-## ☁️ VPS Deployment (Ubuntu 24.04)
-
-### Step 1: Server setup
-
-```bash
-# SSH into your server
-ssh your_user@your_vps_ip
-
-# Update system
 sudo apt update && sudo apt upgrade -y
-
-# Install Docker
-curl -fsSL https://get.docker.com | sh
+sudo apt install -y docker.io docker-compose certbot nginx
 sudo usermod -aG docker $USER
-
-# Install Nginx & Certbot
-sudo apt install nginx certbot python3-certbot-nginx -y
 ```
 
-### Step 2: Clone your repo
-
+### 2. SSL Certificate
 ```bash
-cd /opt
-git clone https://github.com/allan4931/allan-marimo-portfolio.git
-cd allan-marimo-portfolio
-cp backend/.env.example backend/.env
-nano backend/.env   # Fill in your values
+sudo certbot certonly --standalone -d your-domain.com -d www.your-domain.com
 ```
 
-### Step 3: Configure Nginx
-
+### 3. Environment
 ```bash
-sudo cp nginx/portfolio.conf /etc/nginx/sites-available/portfolio
-sudo ln -s /etc/nginx/sites-available/portfolio /etc/nginx/sites-enabled/
-sudo nginx -t
-sudo systemctl reload nginx
+cp .env.example .env
+nano .env   # Add your Gmail App Password and domain
 ```
 
-### Step 4: Get SSL certificates
+### 4. Update nginx.conf
+Replace `your-domain.com` with your actual domain in `nginx/nginx.conf`.
 
+### 5. Deploy
 ```bash
-sudo certbot --nginx -d allan.zivo.cloud -d www.allan.zivo.cloud
-sudo certbot --nginx -d sandbox.allan.zivo.cloud
+docker-compose up -d --build
+docker-compose ps    # check all containers running
 ```
 
-### Step 5: Launch with Docker
-
+### 6. Auto-renew SSL
 ```bash
-docker compose up -d --build
-```
-
-### Step 6: Auto-restart on reboot
-
-```bash
-sudo systemctl enable docker
-# Docker compose already uses restart: unless-stopped
+sudo crontab -e
+# Add:
+0 3 1 * * certbot renew --quiet && docker-compose restart nginx
 ```
 
 ---
 
-## 🔐 Security Hardening
+## ✨ Features
 
-```bash
-# Disable root login
-sudo sed -i 's/PermitRootLogin yes/PermitRootLogin no/' /etc/ssh/sshd_config
-sudo systemctl restart sshd
-
-# Set up SSH key auth
-ssh-copy-id -i ~/.ssh/id_ed25519.pub your_user@your_vps_ip
-
-# UFW firewall
-sudo ufw allow 22/tcp
-sudo ufw allow 80/tcp
-sudo ufw allow 443/tcp
-sudo ufw enable
-```
-
----
-
-## 🌐 Pages
-
-| Route | Description |
-|-------|-------------|
-| `/` | Home — hero, about, tech stack, CTA |
-| `/skills` | Skills grid (16 skills) + Project case studies |
-| `/contact` | Contact info + email form |
+| Feature                         | Detail |
+|----------------------------------|--------|
+| 3D SVG Illustrations            | Side-lit coder, laptop, server rack, skill globe |
+| Gold particle network           | 100+ particles with mouse repulsion + connections |
+| Custom magnetic cursor          | Dot + lagging ring, enlarges on hover |
+| Scroll reveal system            | `fadeUp`, `fadeLeft`, `fadeRight`, `scaleIn` |
+| Counter animations              | Eased count-up on scroll into view |
+| Skill bar animations            | Width transition on IntersectionObserver |
+| Parallax hero ghost-number      | CSS transform on scroll event |
+| Floating 3D SVG animations      | `floatY`, `floatRotate` keyframes |
+| Animated timeline               | Staggered left-side gold timeline |
+| React Router SPA                | `/`, `/skills`, `/contact` |
+| FastAPI contact endpoint        | Rate-limited (5/hour), Pydantic v2 validated |
+| Gmail SMTP mailer               | HTML email template |
+| Docker + Nginx + SSL            | Production-grade deployment |
+| CORS + rate limiting            | Security hardened |
+| Responsive design               | Mobile-first breakpoints |
 
 ---
 
-## 🛠 Tech Stack
+## 📬 Contact
 
-| Layer | Technology |
-|-------|-----------|
-| Frontend | React 18, TypeScript, Framer Motion, Tailwind CSS, React Router |
-| Backend | FastAPI, Python 3.12, Pydantic v2 |
-| Email | Gmail SMTP with App Password |
-| Container | Docker, Docker Compose |
-| Proxy | Nginx |
-| SSL | Let's Encrypt (Certbot) |
-| VPS | Ubuntu 24.04 |
-
----
-
-## 📞 Contact
-
-**Allan Marimo**
-- 📧 allanmarimo455@gmail.com
-- 🐙 [github.com/allan4931](https://github.com/allan4931)
-- 💼 [linkedin.com/in/allanmarimo](https://linkedin.com/in/allanmarimo)
-- 📱 +263 788 447 689
-
----
-
-*Built with precision. Deployed with confidence.*
+**Allan Marimo** · allanmarimo455@gmail.com · +263 788 447 689  
+GitHub: [github.com/allan4931](https://github.com/allan4931) · Zimbabwe 🇿🇼

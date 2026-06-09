@@ -1,0 +1,371 @@
+<svg viewBox="0 0 520 580" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Ambient room glow -->
+    <radialGradient id="roomGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#D4AF37" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#050505" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Screen glow -->
+    <radialGradient id="screenGlow" cx="50%" cy="60%" r="55%">
+      <stop offset="0%"   stop-color="#4FC3F7" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#1a1a2e"  stop-opacity="0"/>
+    </radialGradient>
+    <!-- Left side gold light -->
+    <radialGradient id="leftLight" cx="0%" cy="40%" r="70%">
+      <stop offset="0%"   stop-color="#D4AF37" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#D4AF37" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Right side blue light -->
+    <radialGradient id="rightLight" cx="100%" cy="40%" r="70%">
+      <stop offset="0%"   stop-color="#4FC3F7" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#4FC3F7"  stop-opacity="0"/>
+    </radialGradient>
+    <!-- Desk surface gradient -->
+    <linearGradient id="deskGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2a2218"/>
+      <stop offset="100%" stop-color="#0d0d0d"/>
+    </linearGradient>
+    <!-- Chair gradient -->
+    <linearGradient id="chairGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e1e1e"/>
+      <stop offset="100%" stop-color="#0a0a0a"/>
+    </linearGradient>
+    <!-- Monitor bezel -->
+    <linearGradient id="monitorGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#222"/>
+      <stop offset="100%" stop-color="#111"/>
+    </linearGradient>
+    <!-- Screen content -->
+    <linearGradient id="screenContent" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"  stop-color="#0d1117"/>
+      <stop offset="100%" stop-color="#161b22"/>
+    </linearGradient>
+    <!-- Person body shadow -->
+    <radialGradient id="personShadow" cx="50%" cy="100%" r="50%">
+      <stop offset="0%"  stop-color="#000" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Gold rim-light on person -->
+    <linearGradient id="rimLeft" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#D4AF37" stop-opacity="0.7"/>
+      <stop offset="30%"  stop-color="#D4AF37" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#D4AF37" stop-opacity="0"/>
+    </linearGradient>
+    <!-- Blue screen rim on person -->
+    <linearGradient id="rimRight" x1="100%" y1="0%" x2="0%" y2="0%">
+      <stop offset="0%"   stop-color="#4FC3F7" stop-opacity="0.5"/>
+      <stop offset="40%"  stop-color="#4FC3F7" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#4FC3F7" stop-opacity="0"/>
+    </linearGradient>
+    <!-- Keyboard surface -->
+    <linearGradient id="kbGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2a2a2a"/>
+      <stop offset="100%" stop-color="#111"/>
+    </linearGradient>
+    <!-- Floor shadow ellipse -->
+    <radialGradient id="floorShadow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"  stop-color="#000" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Clip for screen -->
+    <clipPath id="screenClip">
+      <rect x="148" y="72" width="170" height="110" rx="2"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background room glow -->
+  <ellipse cx="260" cy="290" rx="260" ry="290" fill="url(#roomGlow)"/>
+
+  <!-- Side lights (practical) -->
+  <!-- Left gold lamp glow -->
+  <ellipse cx="30" cy="220" rx="120" ry="200" fill="url(#leftLight)" opacity="0.9"/>
+  <!-- Right screen/blue glow -->
+  <ellipse cx="490" cy="200" rx="130" ry="180" fill="url(#rightLight)" opacity="0.8"/>
+
+  <!-- Floor shadow under chair -->
+  <ellipse cx="260" cy="545" rx="130" ry="22" fill="url(#floorShadow)"/>
+
+  <!-- ── CHAIR ── -->
+  <!-- Chair legs (3D perspective) -->
+  <line x1="188" y1="500" x2="175" y2="555" stroke="#1a1a1a" stroke-width="7" stroke-linecap="round"/>
+  <line x1="332" y1="500" x2="345" y2="555" stroke="#1a1a1a" stroke-width="7" stroke-linecap="round"/>
+  <line x1="200" y1="510" x2="195" y2="555" stroke="#151515" stroke-width="5" stroke-linecap="round"/>
+  <line x1="320" y1="510" x2="325" y2="555" stroke="#151515" stroke-width="5" stroke-linecap="round"/>
+  <!-- Leg crossbar -->
+  <line x1="185" y1="538" x2="335" y2="538" stroke="#181818" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- Chair seat -->
+  <path d="M175 470 Q175 500 190 505 L330 505 Q345 500 345 470 Q345 450 260 448 Q175 450 175 470Z" fill="url(#chairGrad)"/>
+  <!-- Seat highlight -->
+  <path d="M192 465 Q260 455 328 465" stroke="rgba(255,255,255,0.06)" stroke-width="2" fill="none"/>
+  <!-- Seat side lights -->
+  <path d="M176 468 Q176 500 191 504" stroke="rgba(212,175,55,0.25)" stroke-width="1.5" fill="none"/>
+  <path d="M344 468 Q344 500 329 504" stroke="rgba(79,195,247,0.15)" stroke-width="1.5" fill="none"/>
+
+  <!-- Chair back -->
+  <path d="M200 350 Q196 440 192 470 L186 470 Q180 440 184 348Z" fill="#181818"/>
+  <path d="M320 350 Q324 440 328 470 L334 470 Q340 440 336 348Z" fill="#181818"/>
+  <!-- Back panel -->
+  <path d="M200 258 Q200 248 260 245 Q320 248 320 258 L322 355 Q260 360 198 355Z" fill="url(#chairGrad)"/>
+  <!-- Backrest highlight -->
+  <path d="M208 260 Q260 252 312 260" stroke="rgba(255,255,255,0.05)" stroke-width="2" fill="none"/>
+  <!-- Gold rim on chair back -->
+  <path d="M200 258 L200 355" stroke="rgba(212,175,55,0.2)" stroke-width="1.5" fill="none"/>
+  <!-- Headrest -->
+  <path d="M225 245 Q260 238 295 245 L295 262 Q260 256 225 262Z" fill="#1c1c1c"/>
+  <path d="M227 247 Q260 240 293 247" stroke="rgba(255,255,255,0.06)" stroke-width="1.5" fill="none"/>
+  <!-- Chair armrests -->
+  <path d="M178 380 Q165 382 162 395 Q162 407 172 408 L188 408 L188 382Z" fill="#161616"/>
+  <path d="M342 380 Q355 382 358 395 Q358 407 348 408 L332 408 L332 382Z" fill="#161616"/>
+
+  <!-- ── PERSON ── -->
+  <!-- Shadow beneath person -->
+  <ellipse cx="255" cy="472" rx="75" ry="12" fill="rgba(0,0,0,0.5)"/>
+
+  <!-- Legs (sitting, slightly foreshortened) -->
+  <!-- Left thigh -->
+  <path d="M218 435 Q212 455 208 470 L232 470 Q234 455 236 435Z" fill="#1a1a1a"/>
+  <!-- Right thigh -->
+  <path d="M302 435 Q308 455 312 470 L288 470 Q286 455 284 435Z" fill="#171717"/>
+  <!-- Left shin -->
+  <path d="M208 470 Q204 510 202 535 L220 535 Q222 510 232 470Z" fill="#161616"/>
+  <!-- Right shin -->
+  <path d="M312 470 Q316 510 318 535 L300 535 Q298 510 288 470Z" fill="#141414"/>
+  <!-- Shoes -->
+  <path d="M196 534 Q196 544 210 545 L222 545 Q228 540 222 534Z" fill="#0f0f0f"/>
+  <path d="M304 534 Q304 544 318 545 L298 545 Q294 540 300 534Z" fill="#0d0d0d"/>
+  <!-- Shoe highlights -->
+  <path d="M200 536 Q210 532 221 534" stroke="rgba(212,175,55,0.12)" stroke-width="1" fill="none"/>
+
+  <!-- Hoodie / body bottom -->
+  <path d="M206 330 Q200 380 200 435 L220 435 L218 350Z" fill="#1d1d1d"/>
+  <path d="M314 330 Q320 380 320 435 L300 435 L302 350Z" fill="#181818"/>
+
+  <!-- Torso/hoodie main body -->
+  <path d="M210 240 Q196 260 196 300 Q196 340 200 380 L320 380 Q324 340 324 300 Q324 260 310 240 Q285 232 260 230 Q235 232 210 240Z" fill="#1e1e1e"/>
+  <!-- Hoodie center seam -->
+  <path d="M260 232 L260 380" stroke="rgba(255,255,255,0.04)" stroke-width="1.5" fill="none"/>
+  <!-- Hoodie pocket -->
+  <path d="M228 335 Q260 328 292 335 L290 365 Q260 370 230 365Z" fill="#181818" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+  <!-- Hoodie drawstrings -->
+  <path d="M248 250 Q246 275 248 290" stroke="rgba(255,255,255,0.08)" stroke-width="1.5" fill="none"/>
+  <path d="M272 250 Q274 275 272 290" stroke="rgba(255,255,255,0.08)" stroke-width="1.5" fill="none"/>
+
+  <!-- Gold rim-light hitting left side of body -->
+  <path d="M210 242 Q198 265 197 310 Q197 355 201 385" stroke="url(#rimLeft)" stroke-width="3" fill="none" opacity="0.8"/>
+  <!-- Blue screen light on right side -->
+  <path d="M310 242 Q322 265 323 310 Q323 355 319 385" stroke="url(#rimRight)" stroke-width="3" fill="none" opacity="0.6"/>
+
+  <!-- Left arm on desk/typing -->
+  <path d="M205 275 Q190 290 185 315 Q182 335 195 340 Q205 342 215 330 Q222 315 222 295 L212 275Z" fill="#1c1c1c"/>
+  <!-- Right arm on desk/typing -->
+  <path d="M315 275 Q330 290 335 315 Q338 335 325 340 Q315 342 305 330 Q298 315 298 295 L308 275Z" fill="#191919"/>
+  <!-- Left hand -->
+  <path d="M192 338 Q188 350 193 356 Q200 360 210 355 Q218 348 216 338Z" fill="#2a2218"/>
+  <!-- Right hand -->
+  <path d="M328 338 Q332 350 327 356 Q320 360 310 355 Q302 348 304 338Z" fill="#252018"/>
+  <!-- Gold light on left arm -->
+  <path d="M205 277 Q191 292 186 317" stroke="rgba(212,175,55,0.3)" stroke-width="2" fill="none"/>
+  <!-- Blue light on right arm -->
+  <path d="M315 277 Q329 292 334 317" stroke="rgba(79,195,247,0.15)" stroke-width="2" fill="none"/>
+
+  <!-- Neck -->
+  <path d="M242 198 Q242 225 248 232 Q260 236 272 232 Q278 225 278 198 Z" fill="#2a2218"/>
+  <!-- Neck gold light -->
+  <path d="M243 200 Q242 222 248 230" stroke="rgba(212,175,55,0.25)" stroke-width="1.5" fill="none"/>
+
+  <!-- Head (facing slightly down/away, no face visible) -->
+  <!-- Base head shape -->
+  <path d="M228 155 Q228 132 260 128 Q292 132 292 155 L295 195 Q280 210 260 212 Q240 210 225 195Z" fill="#2e2418"/>
+  <!-- Head shading (back/top dark) -->
+  <path d="M232 133 Q260 126 288 133 Q288 150 288 170 Q272 165 260 165 Q248 165 232 170 Q232 150 232 133Z" fill="#1a140a" opacity="0.5"/>
+  <!-- Gold rim light on left side of head -->
+  <path d="M229 157 Q228 178 227 195 Q236 208 248 211" stroke="rgba(212,175,55,0.45)" stroke-width="2.5" fill="none"/>
+  <!-- Blue screen light on right side of head/face -->
+  <path d="M291 158 Q292 178 293 195 Q285 207 273 211" stroke="rgba(79,195,247,0.3)" stroke-width="2" fill="none"/>
+
+  <!-- Hair / hood on head -->
+  <path d="M226 158 Q224 140 228 128 Q244 112 260 110 Q276 112 292 128 Q296 140 294 158 Q285 148 260 146 Q235 148 226 158Z" fill="#111111"/>
+  <!-- Hood pulled up slightly -->
+  <path d="M222 200 Q224 188 226 170 Q224 158 228 150 L225 248 Q218 262 210 270Z" fill="#191919"/>
+  <path d="M298 200 Q296 188 294 170 Q296 158 292 150 L295 248 Q302 262 310 270Z" fill="#161616"/>
+
+  <!-- Hoodie hood folds -->
+  <path d="M225 168 Q228 155 235 148" stroke="rgba(255,255,255,0.04)" stroke-width="1.5" fill="none"/>
+  <path d="M295 168 Q292 155 285 148" stroke="rgba(255,255,255,0.04)" stroke-width="1.5" fill="none"/>
+
+  <!-- ── DESK ── -->
+  <path d="M60 400 Q60 392 80 390 L440 390 Q460 392 460 400 L460 415 Q460 420 440 420 L80 420 Q60 420 60 415Z" fill="url(#deskGrad)"/>
+  <!-- Desk top surface highlight -->
+  <path d="M75 392 L445 392" stroke="rgba(255,255,255,0.06)" stroke-width="1" fill="none"/>
+  <!-- Desk side edge (3D) -->
+  <path d="M60 400 L55 450 L75 450 L80 420Z" fill="#1a1208"/>
+  <path d="M460 400 L465 450 L445 450 L440 420Z" fill="#120e05"/>
+  <!-- Desk legs -->
+  <rect x="78"  y="420" width="18" height="120" rx="3" fill="#161008"/>
+  <rect x="424" y="420" width="18" height="120" rx="3" fill="#120e05"/>
+  <!-- Desk surface gold light reflection -->
+  <path d="M60 391 Q180 385 260 387 Q340 385 460 391" stroke="rgba(212,175,55,0.12)" stroke-width="1" fill="none"/>
+  <!-- Desk surface screen blue reflection -->
+  <ellipse cx="260" cy="395" rx="90" ry="5" fill="rgba(79,195,247,0.04)"/>
+
+  <!-- ── MONITOR ── -->
+  <!-- Monitor stand/neck -->
+  <path d="M242 385 L248 340 L272 340 L278 385Z" fill="#181818"/>
+  <path d="M248 340 L250 338 L270 338 L272 340Z" fill="#1e1e1e"/>
+  <!-- Monitor stand base -->
+  <path d="M220 385 L300 385 L298 392 L222 392Z" fill="#1c1c1c"/>
+
+  <!-- Monitor bezel -->
+  <rect x="134" y="58" width="252" height="164" rx="6" fill="url(#monitorGrad)"/>
+  <!-- Bezel inner shadow -->
+  <rect x="138" y="62" width="244" height="156" rx="4" fill="#0d0d0d"/>
+  <!-- Bezel gold left edge glow -->
+  <path d="M134 62 L134 218" stroke="rgba(212,175,55,0.3)" stroke-width="1.5" fill="none"/>
+  <!-- Bezel right screen glow -->
+  <path d="M386 62 L386 218" stroke="rgba(79,195,247,0.18)" stroke-width="1.5" fill="none"/>
+  <!-- Bezel top highlight -->
+  <path d="M140 60 L376 60" stroke="rgba(255,255,255,0.08)" stroke-width="1" fill="none"/>
+
+  <!-- Screen display -->
+  <rect x="142" y="66" width="236" height="148" rx="2" fill="url(#screenContent)"/>
+
+  <!-- Screen glow behind content -->
+  <ellipse cx="260" cy="140" rx="118" ry="74" fill="url(#screenGlow)"/>
+
+  <!-- Code editor interface on screen -->
+  <!-- Title bar -->
+  <rect x="142" y="66" width="236" height="18" rx="0" fill="#1a1a2e"/>
+  <circle cx="156" cy="75" r="4" fill="#ff5f56"/>
+  <circle cx="169" cy="75" r="4" fill="#febc2e"/>
+  <circle cx="182" cy="75" r="4" fill="#28c840"/>
+  <!-- Title text -->
+  <rect x="225" y="70" width="70" height="9" rx="2" fill="rgba(255,255,255,0.1)"/>
+
+  <!-- Sidebar -->
+  <rect x="142" y="84" width="28" height="130" fill="rgba(255,255,255,0.02)"/>
+  <!-- Sidebar icons -->
+  <rect x="148" y="90"  width="16" height="16" rx="3" fill="rgba(212,175,55,0.2)"/>
+  <rect x="148" y="112" width="16" height="16" rx="3" fill="rgba(255,255,255,0.07)"/>
+  <rect x="148" y="134" width="16" height="16" rx="3" fill="rgba(255,255,255,0.07)"/>
+  <rect x="148" y="156" width="16" height="16" rx="3" fill="rgba(255,255,255,0.07)"/>
+
+  <!-- Code lines (syntax coloured) -->
+  <!-- Line 1 -->
+  <rect x="178" y="88"  width="28" height="7" rx="1" fill="rgba(198,120,221,0.7)"/>
+  <rect x="210" y="88"  width="40" height="7" rx="1" fill="rgba(97,175,239,0.7)"/>
+  <rect x="254" y="88"  width="18" height="7" rx="1" fill="rgba(255,255,255,0.4)"/>
+  <rect x="276" y="88"  width="50" height="7" rx="1" fill="rgba(152,195,121,0.7)"/>
+  <!-- Line 2 indented -->
+  <rect x="188" y="101" width="22" height="7" rx="1" fill="rgba(229,192,123,0.7)"/>
+  <rect x="214" y="101" width="16" height="7" rx="1" fill="rgba(255,255,255,0.5)"/>
+  <rect x="234" y="101" width="55" height="7" rx="1" fill="rgba(152,195,121,0.6)"/>
+  <!-- Line 3 indented -->
+  <rect x="188" y="114" width="35" height="7" rx="1" fill="rgba(97,175,239,0.6)"/>
+  <rect x="228" y="114" width="20" height="7" rx="1" fill="rgba(255,255,255,0.4)"/>
+  <rect x="252" y="114" width="42" height="7" rx="1" fill="rgba(229,192,123,0.5)"/>
+  <!-- Line 4 -->
+  <rect x="188" y="127" width="18" height="7" rx="1" fill="rgba(198,120,221,0.6)"/>
+  <rect x="210" y="127" width="60" height="7" rx="1" fill="rgba(255,255,255,0.35)"/>
+  <!-- Line 5 (active / cursor) -->
+  <rect x="178" y="140" width="30" height="7" rx="1" fill="rgba(97,175,239,0.5)"/>
+  <rect x="212" y="140" width="45" height="7" rx="1" fill="rgba(152,195,121,0.5)"/>
+  <!-- Cursor blink -->
+  <rect x="260" y="139" width="1.5" height="9" rx="1" fill="rgba(212,175,55,0.9)"/>
+  <!-- Line 6 -->
+  <rect x="178" y="153" width="80" height="7" rx="1" fill="rgba(255,255,255,0.18)"/>
+  <!-- Line 7 -->
+  <rect x="178" y="166" width="48" height="7" rx="1" fill="rgba(229,192,123,0.45)"/>
+  <rect x="230" y="166" width="30" height="7" rx="1" fill="rgba(255,255,255,0.3)"/>
+  <!-- Status bar -->
+  <rect x="142" y="194" width="236" height="14" rx="0" fill="rgba(97,175,239,0.15)"/>
+  <rect x="148" y="197" width="55" height="6" rx="1" fill="rgba(255,255,255,0.2)"/>
+  <rect x="335" y="197" width="36" height="6" rx="1" fill="rgba(212,175,55,0.4)"/>
+
+  <!-- Screen ambient light spilling onto desk -->
+  <ellipse cx="260" cy="395" rx="110" ry="8" fill="rgba(79,195,247,0.05)"/>
+
+  <!-- ── KEYBOARD ── -->
+  <path d="M168 388 Q168 382 180 380 L340 380 Q352 382 352 388 L350 396 Q350 400 338 400 L182 400 Q170 400 170 396Z" fill="url(#kbGrad)"/>
+  <!-- Key rows -->
+  <!-- Row 1 -->
+  <rect x="178" y="382" width="8"  height="5" rx="1" fill="rgba(255,255,255,0.1)"/>
+  <rect x="190" y="382" width="8"  height="5" rx="1" fill="rgba(255,255,255,0.1)"/>
+  <rect x="202" y="382" width="8"  height="5" rx="1" fill="rgba(255,255,255,0.1)"/>
+  <rect x="214" y="382" width="8"  height="5" rx="1" fill="rgba(255,255,255,0.1)"/>
+  <rect x="226" y="382" width="8"  height="5" rx="1" fill="rgba(255,255,255,0.1)"/>
+  <rect x="238" y="382" width="8"  height="5" rx="1" fill="rgba(255,255,255,0.1)"/>
+  <rect x="250" y="382" width="8"  height="5" rx="1" fill="rgba(212,175,55,0.3)"/>
+  <rect x="262" y="382" width="8"  height="5" rx="1" fill="rgba(255,255,255,0.1)"/>
+  <rect x="274" y="382" width="8"  height="5" rx="1" fill="rgba(255,255,255,0.1)"/>
+  <rect x="286" y="382" width="8"  height="5" rx="1" fill="rgba(255,255,255,0.1)"/>
+  <rect x="298" y="382" width="8"  height="5" rx="1" fill="rgba(255,255,255,0.1)"/>
+  <rect x="310" y="382" width="8"  height="5" rx="1" fill="rgba(255,255,255,0.1)"/>
+  <rect x="322" y="382" width="8"  height="5" rx="1" fill="rgba(255,255,255,0.1)"/>
+  <rect x="334" y="382" width="10" height="5" rx="1" fill="rgba(255,255,255,0.08)"/>
+  <!-- Row 2 -->
+  <rect x="178" y="390" width="24" height="5" rx="1" fill="rgba(255,255,255,0.08)"/>
+  <rect x="206" y="390" width="8"  height="5" rx="1" fill="rgba(255,255,255,0.1)"/>
+  <rect x="218" y="390" width="8"  height="5" rx="1" fill="rgba(255,255,255,0.1)"/>
+  <rect x="230" y="390" width="8"  height="5" rx="1" fill="rgba(255,255,255,0.1)"/>
+  <rect x="242" y="390" width="8"  height="5" rx="1" fill="rgba(255,255,255,0.1)"/>
+  <rect x="254" y="390" width="8"  height="5" rx="1" fill="rgba(255,255,255,0.1)"/>
+  <rect x="266" y="390" width="8"  height="5" rx="1" fill="rgba(255,255,255,0.1)"/>
+  <rect x="278" y="390" width="8"  height="5" rx="1" fill="rgba(255,255,255,0.1)"/>
+  <rect x="290" y="390" width="8"  height="5" rx="1" fill="rgba(255,255,255,0.1)"/>
+  <rect x="302" y="390" width="8"  height="5" rx="1" fill="rgba(255,255,255,0.1)"/>
+  <rect x="314" y="390" width="28" height="5" rx="1" fill="rgba(255,255,255,0.08)"/>
+  <!-- Spacebar area -->
+  <rect x="214" y="396" width="92" height="4" rx="1" fill="rgba(255,255,255,0.08)"/>
+  <!-- Keyboard gold light reflection -->
+  <path d="M168 383 Q200 378 260 381 Q320 378 352 383" stroke="rgba(212,175,55,0.15)" stroke-width="1" fill="none"/>
+
+  <!-- ── MOUSE ── -->
+  <path d="M355 384 Q355 376 362 374 Q372 372 379 376 Q384 378 382 384 L380 396 Q380 400 367 400 Q355 400 355 396Z" fill="#1c1c1c"/>
+  <path d="M367 374 L367 390" stroke="rgba(255,255,255,0.08)" stroke-width="1" fill="none"/>
+  <!-- Mouse scroll wheel -->
+  <rect x="364" y="376" width="6" height="8" rx="2" fill="rgba(255,255,255,0.12)"/>
+  <!-- Mouse gold light reflection -->
+  <path d="M356 384 Q356 378 363 375" stroke="rgba(212,175,55,0.2)" stroke-width="1" fill="none"/>
+
+  <!-- ── COFFEE MUG ── -->
+  <path d="M82 378 Q80 366 92 364 L110 364 Q122 366 120 378 L118 390 Q110 394 92 394 Q74 394 82 390Z" fill="#1a1a1a"/>
+  <!-- Mug handle -->
+  <path d="M120 368 Q132 368 132 376 Q132 384 120 384" stroke="#181818" stroke-width="4" fill="none"/>
+  <!-- Coffee surface -->
+  <ellipse cx="101" cy="365" rx="14" ry="5" fill="#2a1800"/>
+  <ellipse cx="101" cy="365" rx="10" ry="3" fill="#3d2200"/>
+  <!-- Steam lines -->
+  <path d="M95 360 Q93 352 96 344" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M102 358 Q100 348 103 340" stroke="rgba(255,255,255,0.1)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M108 360 Q110 350 107 342" stroke="rgba(255,255,255,0.08)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Mug gold reflection -->
+  <path d="M83 380 Q82 370 93 365" stroke="rgba(212,175,55,0.25)" stroke-width="1" fill="none"/>
+
+  <!-- ── DESK ITEMS: sticky notes, phone ── -->
+  <!-- Sticky note 1 -->
+  <path d="M408 375 L428 375 L428 392 L418 392 L408 392Z" fill="#f0d060" opacity="0.75"/>
+  <path d="M428 375 L428 380 L423 375Z" fill="rgba(0,0,0,0.2)"/>
+  <!-- Sticky note lines -->
+  <line x1="412" y1="380" x2="425" y2="380" stroke="rgba(0,0,0,0.3)" stroke-width="1"/>
+  <line x1="412" y1="384" x2="425" y2="384" stroke="rgba(0,0,0,0.3)" stroke-width="1"/>
+  <line x1="412" y1="388" x2="420" y2="388" stroke="rgba(0,0,0,0.3)" stroke-width="1"/>
+
+  <!-- Sticky note 2 -->
+  <path d="M430 373 L448 373 L448 388 L438 388 L430 388Z" fill="rgba(100,200,150,0.65)" opacity="0.8"/>
+  <path d="M448 373 L448 378 L443 373Z" fill="rgba(0,0,0,0.2)"/>
+
+  <!-- Pencil on desk -->
+  <line x1="60" y1="394" x2="130" y2="390" stroke="#f0d060" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M60 394 L56 397 L58 393Z" fill="#888"/>
+
+  <!-- ── AMBIENT DETAILS ── -->
+  <!-- Gold lamp hint (left side, off-screen) -->
+  <ellipse cx="-10" cy="180" rx="80" ry="160" fill="rgba(212,175,55,0.07)"/>
+
+  <!-- Floating code particle near screen -->
+  <text x="100" y="52" font-family="monospace" font-size="9" fill="rgba(212,175,55,0.3)" opacity="0.6">const build = () =&gt;</text>
+  <text x="350" y="48" font-family="monospace" font-size="8" fill="rgba(79,195,247,0.3)" opacity="0.5">{ deploy: true }</text>
+  <text x="72"  y="290" font-family="monospace" font-size="8" fill="rgba(212,175,55,0.25)" opacity="0.5">npm run build</text>
+  <text x="388" y="310" font-family="monospace" font-size="7" fill="rgba(79,195,247,0.2)" opacity="0.4">docker compose up</text>
+</svg>

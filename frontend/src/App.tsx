@@ -1,52 +1,26 @@
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
-import { AnimatePresence } from 'framer-motion'
-import React, { useEffect, useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Cursor from './components/Cursor'
 import Navbar from './components/Navbar'
-import Footer from './components/Footer'
-import LoadingScreen from './components/LoadingScreen'
-import CustomCursor from './components/CustomCursor'
+import ParticleCanvas from './components/ParticleCanvas'
 import Home from './pages/Home'
 import Skills from './pages/Skills'
 import Contact from './pages/Contact'
+import Footer from './components/Footer'
 
-function AnimatedRoutes() {
-  const location = useLocation()
-  return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<Home />} />
-        <Route path="/skills" element={<Skills />} />
-        <Route path="/contact" element={<Contact />} />
-      </Routes>
-    </AnimatePresence>
-  )
-}
-
-function App() {
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 2400)
-    return () => clearTimeout(timer)
-  }, [])
-
+export default function App() {
   return (
     <BrowserRouter>
-      <div className="noise">
-        <CustomCursor />
-        <AnimatePresence>{loading && <LoadingScreen key="loader" />}</AnimatePresence>
-        {!loading && (
-          <>
-            <Navbar />
-            <main className="min-h-screen">
-              <AnimatedRoutes />
-            </main>
-            <Footer />
-          </>
-        )}
-      </div>
+      <Cursor />
+      <ParticleCanvas />
+      <Navbar />
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/skills" element={<Skills />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+      </main>
+      <Footer />
     </BrowserRouter>
   )
 }
-
-export default App

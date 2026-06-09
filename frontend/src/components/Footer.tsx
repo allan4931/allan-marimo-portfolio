@@ -1,49 +1,38 @@
-import { motion } from 'framer-motion'
-import { FiGithub, FiLinkedin, FiMail } from 'react-icons/fi'
+import { Link } from 'react-router-dom'
+import './Footer.css'
 
 export default function Footer() {
-  const socials = [
-    { icon: FiGithub, href: 'https://github.com/allan4931', label: 'GitHub' },
-    { icon: FiLinkedin, href: 'https://linkedin.com/in/allanmarimo', label: 'LinkedIn' },
-    { icon: FiMail, href: 'mailto:allanmarimo455@gmail.com', label: 'Email' },
-  ]
-
   return (
-    <footer className="border-t border-white/5 bg-black">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-10">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          <div>
-            <div className="font-display font-bold text-lg">
-              <span className="text-white">Allan</span>{' '}
-              <span className="text-electric">Marimo</span>
-            </div>
-            <div className="font-mono text-xs text-white/30 mt-1">
-              We build simplicity for users.
-            </div>
-          </div>
-
-          <div className="flex items-center gap-6">
-            {socials.map(({ icon: Icon, href, label }) => (
-              <motion.a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                className="text-white/40 hover:text-electric transition-colors duration-300"
-                whileHover={{ scale: 1.2, y: -2 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <Icon size={18} />
-              </motion.a>
-            ))}
-          </div>
-
-          <div className="font-mono text-[10px] text-white/20 text-center md:text-right">
-            <div>© {new Date().getFullYear()} Allan Marimo</div>
-            <div className="text-electric/30 mt-0.5">All rights reserved</div>
-          </div>
+    <footer className="footer">
+      <div className="footer__top">
+        <div className="footer__brand">
+          <Link to="/" className="footer__logo">ALLAN<span>.</span></Link>
+          <p className="footer__tagline">
+            Built with precision.<br/>Deployed with confidence.
+          </p>
         </div>
+
+        <nav className="footer__nav">
+          <span className="footer__nav-label">Navigate</span>
+          <Link to="/">Home</Link>
+          <Link to="/skills">Skills</Link>
+          <Link to="/contact">Contact</Link>
+        </nav>
+
+        <div className="footer__contact-col">
+          <span className="footer__nav-label">Contact</span>
+          <a href="mailto:allanmarimo455@gmail.com">allanmarimo455@gmail.com</a>
+          <a href="https://github.com/allan4931" target="_blank" rel="noreferrer">github.com/allan4931</a>
+          <a href="https://linkedin.com/in/allanmarimo" target="_blank" rel="noreferrer">linkedin.com/in/allanmarimo</a>
+          <a href="tel:+263788447689">+263 788 447 689</a>
+        </div>
+      </div>
+
+      <div className="gold-divider" style={{ margin: '2rem 0 1.5rem' }} />
+
+      <div className="footer__bottom">
+        <span>© {new Date().getFullYear()} Allan Marimo. All rights reserved.</span>
+        <span className="footer__motto">Zimbabwe 🇿🇼 &nbsp;·&nbsp; Independent Software Engineer</span>
       </div>
     </footer>
   )

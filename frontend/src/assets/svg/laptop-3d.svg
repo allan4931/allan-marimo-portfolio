@@ -1,0 +1,165 @@
+<svg viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="lidTop" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2a2a2a"/>
+      <stop offset="100%" stop-color="#111"/>
+    </linearGradient>
+    <linearGradient id="screenBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0d1117"/>
+      <stop offset="100%" stop-color="#161b22"/>
+    </linearGradient>
+    <radialGradient id="screenGlowL" cx="50%" cy="50%" r="60%">
+      <stop offset="0%"   stop-color="#4FC3F7" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#4FC3F7" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="baseGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2e2e2e"/>
+      <stop offset="100%" stop-color="#141414"/>
+    </linearGradient>
+    <linearGradient id="baseEdge" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#383838"/>
+      <stop offset="100%" stop-color="#1a1a1a"/>
+    </linearGradient>
+    <radialGradient id="shadow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"  stop-color="#000" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Drop shadow -->
+  <ellipse cx="200" cy="278" rx="130" ry="16" fill="url(#shadow)"/>
+
+  <!-- ── BASE / BOTTOM ── -->
+  <!-- Base main surface (3D perspective top face) -->
+  <path d="M52 230 Q52 222 68 218 L332 218 Q348 222 348 230 L344 248 Q344 254 328 256 L72 256 Q56 254 56 248Z" fill="url(#baseGrad)"/>
+  <!-- Base front edge (3D depth) -->
+  <path d="M56 248 L60 272 L340 272 L344 248Z" fill="url(#baseEdge)"/>
+  <!-- Base side left edge -->
+  <path d="M52 230 L56 248 L60 272 L54 260 L48 238Z" fill="#1a1a1a"/>
+  <!-- Base side right edge -->
+  <path d="M348 230 L344 248 L340 272 L346 260 L352 238Z" fill="#141414"/>
+  <!-- Touchpad -->
+  <path d="M164 228 Q164 222 180 220 L220 220 Q236 222 236 228 L234 244 Q234 248 218 248 L182 248 Q166 248 166 244Z" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+  <!-- Base top surface highlight -->
+  <path d="M66 220 L334 220" stroke="rgba(255,255,255,0.08)" stroke-width="1" fill="none"/>
+  <!-- Base edge top highlight -->
+  <path d="M60 272 L340 272" stroke="rgba(255,255,255,0.05)" stroke-width="1" fill="none"/>
+  <!-- Keyboard area -->
+  <!-- Key rows on base -->
+  <rect x="76"  y="225" width="7" height="5" rx="1" fill="rgba(255,255,255,0.07)"/>
+  <rect x="87"  y="225" width="7" height="5" rx="1" fill="rgba(255,255,255,0.07)"/>
+  <rect x="98"  y="225" width="7" height="5" rx="1" fill="rgba(255,255,255,0.07)"/>
+  <rect x="109" y="225" width="7" height="5" rx="1" fill="rgba(212,175,55,0.25)"/>
+  <rect x="120" y="225" width="7" height="5" rx="1" fill="rgba(255,255,255,0.07)"/>
+  <rect x="131" y="225" width="7" height="5" rx="1" fill="rgba(255,255,255,0.07)"/>
+  <rect x="248" y="225" width="7" height="5" rx="1" fill="rgba(255,255,255,0.07)"/>
+  <rect x="259" y="225" width="7" height="5" rx="1" fill="rgba(255,255,255,0.07)"/>
+  <rect x="270" y="225" width="7" height="5" rx="1" fill="rgba(255,255,255,0.07)"/>
+  <rect x="281" y="225" width="7" height="5" rx="1" fill="rgba(255,255,255,0.07)"/>
+  <rect x="292" y="225" width="7" height="5" rx="1" fill="rgba(255,255,255,0.07)"/>
+  <rect x="303" y="225" width="7" height="5" rx="1" fill="rgba(255,255,255,0.07)"/>
+  <rect x="314" y="225" width="7" height="5" rx="1" fill="rgba(255,255,255,0.07)"/>
+  <!-- Second row -->
+  <rect x="76"  y="234" width="10" height="5" rx="1" fill="rgba(255,255,255,0.06)"/>
+  <rect x="90"  y="234" width="7"  height="5" rx="1" fill="rgba(255,255,255,0.06)"/>
+  <rect x="101" y="234" width="7"  height="5" rx="1" fill="rgba(255,255,255,0.06)"/>
+  <rect x="112" y="234" width="7"  height="5" rx="1" fill="rgba(255,255,255,0.06)"/>
+  <rect x="123" y="234" width="7"  height="5" rx="1" fill="rgba(255,255,255,0.06)"/>
+  <rect x="258" y="234" width="7"  height="5" rx="1" fill="rgba(255,255,255,0.06)"/>
+  <rect x="269" y="234" width="7"  height="5" rx="1" fill="rgba(255,255,255,0.06)"/>
+  <rect x="280" y="234" width="7"  height="5" rx="1" fill="rgba(255,255,255,0.06)"/>
+  <rect x="291" y="234" width="7"  height="5" rx="1" fill="rgba(255,255,255,0.06)"/>
+  <rect x="302" y="234" width="7"  height="5" rx="1" fill="rgba(255,255,255,0.06)"/>
+  <rect x="313" y="234" width="9"  height="5" rx="1" fill="rgba(255,255,255,0.06)"/>
+  <!-- Spacebar -->
+  <rect x="146" y="243" width="108" height="5" rx="2" fill="rgba(255,255,255,0.06)"/>
+
+  <!-- ── LID / SCREEN ── -->
+  <!-- Hinge area -->
+  <path d="M60 218 L64 215 L336 215 L340 218Z" fill="#1e1e1e"/>
+
+  <!-- Lid outer face (back face, slight 3D) -->
+  <path d="M66 48 Q66 38 80 36 L320 36 Q334 38 334 48 L338 212 Q338 218 322 218 L78 218 Q62 218 62 212Z" fill="url(#lidTop)"/>
+  <!-- Lid left edge (3D depth) -->
+  <path d="M62 50 L58 60 L58 210 L62 212Z" fill="#1a1a1a"/>
+  <!-- Lid right edge -->
+  <path d="M338 50 L342 60 L342 210 L338 212Z" fill="#141414"/>
+  <!-- Lid top edge -->
+  <path d="M66 48 L58 54" stroke="#222" stroke-width="1" fill="none"/>
+  <path d="M334 48 L342 54" stroke="#181818" stroke-width="1" fill="none"/>
+  <!-- Lid top (back) edge -->
+  <path d="M58 54 L342 54" stroke="rgba(255,255,255,0.06)" stroke-width="1" fill="none"/>
+
+  <!-- Screen bezel (inner) -->
+  <rect x="72" y="50" width="256" height="162" rx="4" fill="#0d0d0d"/>
+
+  <!-- Screen surface -->
+  <rect x="78" y="56" width="244" height="150" rx="2" fill="url(#screenBg)"/>
+
+  <!-- Screen glow -->
+  <ellipse cx="200" cy="131" rx="122" ry="75" fill="url(#screenGlowL)"/>
+
+  <!-- Screen content: dashboard/terminal look -->
+  <!-- Top bar -->
+  <rect x="78" y="56" width="244" height="16" rx="0" fill="rgba(255,255,255,0.03)"/>
+  <circle cx="91" cy="64" r="4" fill="rgba(255,95,86,0.7)"/>
+  <circle cx="103" cy="64" r="4" fill="rgba(254,188,46,0.7)"/>
+  <circle cx="115" cy="64" r="4" fill="rgba(40,200,64,0.7)"/>
+  <!-- Tab -->
+  <rect x="130" y="58" width="60" height="12" rx="2" fill="rgba(255,255,255,0.07)"/>
+  <rect x="195" y="58" width="60" height="12" rx="2" fill="rgba(212,175,55,0.15)"/>
+
+  <!-- Code lines -->
+  <rect x="88"  y="80"  width="18" height="6" rx="1" fill="rgba(198,120,221,0.6)"/>
+  <rect x="110" y="80"  width="35" height="6" rx="1" fill="rgba(97,175,239,0.6)"/>
+  <rect x="149" y="80"  width="15" height="6" rx="1" fill="rgba(255,255,255,0.4)"/>
+  <rect x="168" y="80"  width="45" height="6" rx="1" fill="rgba(152,195,121,0.6)"/>
+
+  <rect x="96"  y="91"  width="22" height="6" rx="1" fill="rgba(229,192,123,0.65)"/>
+  <rect x="122" y="91"  width="14" height="6" rx="1" fill="rgba(255,255,255,0.45)"/>
+  <rect x="140" y="91"  width="48" height="6" rx="1" fill="rgba(152,195,121,0.55)"/>
+  <rect x="192" y="91"  width="22" height="6" rx="1" fill="rgba(97,175,239,0.45)"/>
+
+  <rect x="96"  y="102" width="30" height="6" rx="1" fill="rgba(97,175,239,0.55)"/>
+  <rect x="130" y="102" width="18" height="6" rx="1" fill="rgba(255,255,255,0.38)"/>
+  <rect x="152" y="102" width="38" height="6" rx="1" fill="rgba(229,192,123,0.48)"/>
+
+  <rect x="96"  y="113" width="16" height="6" rx="1" fill="rgba(198,120,221,0.55)"/>
+  <rect x="116" y="113" width="55" height="6" rx="1" fill="rgba(255,255,255,0.3)"/>
+
+  <!-- Cursor line (active) -->
+  <rect x="88"  y="124" width="26" height="6" rx="1" fill="rgba(97,175,239,0.45)"/>
+  <rect x="118" y="124" width="40" height="6" rx="1" fill="rgba(152,195,121,0.45)"/>
+  <rect x="161" y="123" width="1.5" height="8" rx="1" fill="rgba(212,175,55,0.9)"/>
+
+  <rect x="88"  y="135" width="72" height="6" rx="1" fill="rgba(255,255,255,0.16)"/>
+  <rect x="88"  y="146" width="42" height="6" rx="1" fill="rgba(229,192,123,0.4)"/>
+  <rect x="134" y="146" width="28" height="6" rx="1" fill="rgba(255,255,255,0.25)"/>
+
+  <!-- Right panel: file tree -->
+  <rect x="272" y="72" width="44" height="128" rx="0" fill="rgba(255,255,255,0.015)"/>
+  <rect x="276" y="76" width="8"  height="6" rx="1" fill="rgba(212,175,55,0.4)"/>
+  <rect x="288" y="76" width="24" height="6" rx="1" fill="rgba(255,255,255,0.15)"/>
+  <rect x="280" y="86" width="28" height="5" rx="1" fill="rgba(255,255,255,0.1)"/>
+  <rect x="280" y="95" width="22" height="5" rx="1" fill="rgba(152,195,121,0.35)"/>
+  <rect x="280" y="104" width="26" height="5" rx="1" fill="rgba(255,255,255,0.1)"/>
+  <rect x="280" y="113" width="18" height="5" rx="1" fill="rgba(97,175,239,0.35)"/>
+  <rect x="280" y="122" width="24" height="5" rx="1" fill="rgba(255,255,255,0.1)"/>
+  <rect x="280" y="131" width="20" height="5" rx="1" fill="rgba(255,255,255,0.1)"/>
+
+  <!-- Status bar -->
+  <rect x="78"  y="196" width="244" height="10" rx="0" fill="rgba(97,175,239,0.12)"/>
+  <rect x="84"  y="198" width="48" height="5"  rx="1" fill="rgba(255,255,255,0.18)"/>
+  <rect x="280" y="198" width="36" height="5"  rx="1" fill="rgba(212,175,55,0.4)"/>
+
+  <!-- Apple / brand logo hint on lid back -->
+  <circle cx="200" cy="130" r="20" fill="rgba(255,255,255,0.015)" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+
+  <!-- Screen outer glow (ambient) -->
+  <ellipse cx="200" cy="131" rx="140" ry="90" fill="rgba(79,195,247,0.04)"/>
+
+  <!-- Lid highlight top -->
+  <path d="M70 50 L330 50" stroke="rgba(255,255,255,0.07)" stroke-width="1" fill="none"/>
+  <!-- Lid left highlight -->
+  <path d="M62 50 L60 212" stroke="rgba(212,175,55,0.12)" stroke-width="1" fill="none"/>
+</svg>

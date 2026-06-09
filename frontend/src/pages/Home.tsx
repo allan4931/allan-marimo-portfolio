@@ -1,459 +1,367 @@
-import { useEffect, useState, useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { FiArrowRight, FiGithub, FiLinkedin } from 'react-icons/fi'
-import PageTransition from '../components/PageTransition'
+import { useCounter } from '../hooks/useCounter'
+import './Home.css'
 
-const roles = [
-  'Software Engineer',
-  'System Architect',
-  'Cloud Specialist',
-  'Automation Expert',
-  'Full-Stack Developer',
-]
+// SVG imports (Vite handles these as URLs)
+import coderSvg   from '../assets/svg/coder-3d.svg'
+import laptopSvg  from '../assets/svg/laptop-3d.svg'
+import serverSvg  from '../assets/svg/server-3d.svg'
+import globeSvg   from '../assets/svg/skill-globe.svg'
 
-function TypingEffect() {
-  const [roleIndex, setRoleIndex] = useState(0)
-  const [text, setText] = useState('')
-  const [deleting, setDeleting] = useState(false)
-  const [speed, setSpeed] = useState(80)
-
-  useEffect(() => {
-    const current = roles[roleIndex]
-    const timer = setTimeout(() => {
-      if (!deleting) {
-        setText(current.slice(0, text.length + 1))
-        if (text.length + 1 === current.length) {
-          setSpeed(1800)
-          setDeleting(true)
-        } else {
-          setSpeed(80)
-        }
-      } else {
-        setText(current.slice(0, text.length - 1))
-        setSpeed(40)
-        if (text.length === 0) {
-          setDeleting(false)
-          setRoleIndex((i) => (i + 1) % roles.length)
-        }
-      }
-    }, speed)
-    return () => clearTimeout(timer)
-  }, [text, deleting, roleIndex, speed])
-
+/* ── Animated counter cell ── */
+function StatCell({ target, suffix, label }: { target: number; suffix: string; label: string }) {
+  const { count, ref } = useCounter(target, 1600, suffix)
   return (
-    <span className="text-electric">
-      {text}
-      <span className="typing-cursor" />
-    </span>
+    <div className="stat-cell reveal" ref={ref as React.RefObject<HTMLDivElement>}>
+      <span className="stat-cell__num">{count}{suffix}</span>
+      <span className="stat-cell__label">{label}</span>
+    </div>
   )
 }
 
-const stats = [
-  { label: 'Projects Delivered', value: '20+' },
-  { label: 'Technologies Mastered', value: '15+' },
-  { label: 'Years of Experience', value: '4+' },
-  { label: 'Cloud Deployments', value: '10+' },
-]
-
-const techLogos = [
-  { name: 'React', icon: '⚛️' },
-  { name: 'Python', icon: '🐍' },
-  { name: 'Docker', icon: '🐳' },
-  { name: 'FastAPI', icon: '🚀' },
-  { name: 'TypeScript', icon: '🔷' },
-  { name: 'PostgreSQL', icon: '🗄️' },
-  { name: 'n8n', icon: '🟢' },
-  { name: 'Nginx', icon: '⚙️' },
-]
+/* ── scroll reveal helper ── */
+function useRevealAll(selector: string) {
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view') }),
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    )
+    document.querySelectorAll(selector).forEach(el => obs.observe(el))
+    return () => obs.disconnect()
+  }, [selector])
+}
 
 export default function Home() {
-  const containerRef = useRef(null)
-  const { scrollYProgress } = useScroll({ target: containerRef })
+  useRevealAll('.reveal, .reveal-left, .reveal-right, .reveal-scale')
 
+  /* parallax on hero ghost-number */
+  const ghostRef = useRef<HTMLSpanElement>(null)
+  useEffect(() => {
+    const onScroll = () => {
+      if (ghostRef.current)
+        ghostRef.current.style.transform = `translateY(${window.scrollY * 0.28}px)`
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   return (
-    <PageTransition>
-      <div ref={containerRef}>
-        {/* HERO SECTION */}
-        <section className="relative min-h-screen flex items-center overflow-hidden">
-          {/* Background layers */}
-          <div className="absolute inset-0 grid-bg" />
-          <div className="absolute inset-0 hero-glow" />
+    <>
+      {/* ══ HERO ══ */}
+      <section className="hero" id="home">
+        <div className="hero__bg" />
+        <div className="hero__grid-lines" aria-hidden="true" />
 
-          {/* Animated orbs */}
-          <motion.div
-            className="absolute top-1/4 right-1/4 w-96 h-96 rounded-full opacity-5"
-            style={{
-              background: 'radial-gradient(circle, #00d4ff, transparent)',
-              filter: 'blur(60px)',
-            }}
-            animate={{
-              scale: [1, 1.3, 1],
-              x: [0, 30, 0],
-              y: [0, -20, 0],
-            }}
-            transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-          />
-          <motion.div
-            className="absolute bottom-1/4 left-1/4 w-64 h-64 rounded-full opacity-5"
-            style={{
-              background: 'radial-gradient(circle, #0066ff, transparent)',
-              filter: 'blur(60px)',
-            }}
-            animate={{ scale: [1, 1.4, 1] }}
-            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-          />
+        {/* Ghost number */}
+        <span className="hero__ghost" ref={ghostRef} aria-hidden="true">01</span>
 
-          <div className="max-w-7xl mx-auto px-6 lg:px-8 pt-28 pb-20 relative z-10">
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
-              {/* Left: Text */}
-              <div>
-                <motion.div
-                  className="inline-flex items-center gap-2 glass-card px-4 py-2 rounded-full mb-8"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.1 }}
-                >
-                  <span className="w-2 h-2 rounded-full bg-electric animate-pulse" />
-                  <span className="font-mono text-xs text-electric/80 tracking-widest uppercase">
-                    Available for Freelance
-                  </span>
-                </motion.div>
-
-                <motion.h1
-                  className="font-display text-5xl md:text-6xl xl:text-7xl font-bold leading-[1.05] tracking-tight"
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2, duration: 0.7 }}
-                >
-                  Hi, I'm{' '}
-                  <span className="neon-text">Allan</span>
-                  <br />
-                  <TypingEffect />
-                </motion.h1>
-
-                <motion.blockquote
-                  className="mt-8 border-l-2 border-electric pl-5"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.4 }}
-                >
-                  <p className="font-display text-xl text-white/90 italic leading-relaxed">
-                    "We build simplicity for users.{' '}
-                    <span className="text-electric not-italic">Complexity is our responsibility.</span>"
-                  </p>
-                </motion.blockquote>
-
-                <motion.p
-                  className="mt-6 text-white/50 font-body text-base leading-relaxed max-w-lg"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.5 }}
-                >
-                  I transform research into functional solutions. I design systems that scale,
-                  automate processes, and deliver real-world impact. As a freelance software
-                  engineer, I don't just write code — I architect digital ecosystems.
-                </motion.p>
-
-                <motion.div
-                  className="mt-10 flex flex-wrap gap-4"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6 }}
-                >
-                  <Link to="/skills" className="btn-primary flex items-center gap-2">
-                    View My Work <FiArrowRight />
-                  </Link>
-                  <Link
-                    to="/contact"
-                    className="px-8 py-3 bg-electric/10 border border-electric/20 text-white/80 font-mono text-xs tracking-widest uppercase hover:bg-electric/20 transition-all duration-300"
-                  >
-                    Let's Talk
-                  </Link>
-                </motion.div>
-
-                <motion.div
-                  className="mt-8 flex items-center gap-6"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.8 }}
-                >
-                  <a
-                    href="https://github.com/allan4931"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-white/30 hover:text-electric transition-colors"
-                  >
-                    <FiGithub size={20} />
-                  </a>
-                  <a
-                    href="https://linkedin.com/in/allanmarimo"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-white/30 hover:text-electric transition-colors"
-                  >
-                    <FiLinkedin size={20} />
-                  </a>
-                  <div className="h-px flex-1 bg-white/10" />
-                  <span className="font-mono text-[10px] text-white/20">allan4931 on GitHub</span>
-                </motion.div>
-              </div>
-
-              {/* Right: Avatar */}
-              <motion.div
-                className="flex justify-center"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.3, duration: 0.8 }}
-              >
-                <div className="relative">
-                  {/* Outer ring */}
-                  <motion.div
-                    className="absolute inset-0 rounded-full border border-electric/20"
-                    style={{ margin: '-30px' }}
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-                  />
-                  {/* Middle ring */}
-                  <motion.div
-                    className="absolute inset-0 rounded-full border border-electric/10"
-                    style={{ margin: '-60px' }}
-                    animate={{ rotate: -360 }}
-                    transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
-                  />
-
-                  {/* Avatar circle */}
-                  <motion.div
-                    className="w-56 h-56 md:w-72 md:h-72 rounded-full glass-card neon-border flex flex-col items-center justify-center relative overflow-hidden"
-                    animate={{ y: [0, -12, 0] }}
-                    transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-                    style={{ boxShadow: '0 0 60px rgba(0,212,255,0.15), inset 0 0 60px rgba(0,212,255,0.03)' }}
-                  >
-                    {/* Avatar icon */}
-                    <svg
-                      viewBox="0 0 100 100"
-                      className="w-28 h-28 md:w-36 md:h-36 text-electric/40"
-                      fill="currentColor"
-                    >
-                      <circle cx="50" cy="38" r="18" />
-                      <path d="M15 85c0-20 15-35 35-35s35 15 35 35" />
-                    </svg>
-                    <div className="absolute bottom-6 font-mono text-xs text-electric/50 text-center">
-                      <div className="text-[9px] tracking-widest">ALLAN MARIMO</div>
-                    </div>
-                  </motion.div>
-
-                  {/* Floating badges */}
-                  {[
-                    { label: 'React Native', pos: '-top-4 -left-8 md:-left-16', delay: 0 },
-                    { label: 'FastAPI', pos: '-bottom-4 -right-6 md:-right-14', delay: 0.3 },
-                    { label: 'Docker', pos: 'top-1/2 -right-10 md:-right-20', delay: 0.6 },
-                  ].map(({ label, pos, delay }) => (
-                    <motion.div
-                      key={label}
-                      className={`absolute ${pos} glass-card border border-electric/20 px-3 py-1.5 rounded-full`}
-                      animate={{ y: [0, -6, 0] }}
-                      transition={{ duration: 4, repeat: Infinity, delay, ease: 'easeInOut' }}
-                    >
-                      <span className="font-mono text-[10px] text-electric/80">{label}</span>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-            </div>
-
-            {/* Stats */}
-            <motion.div
-              className="mt-24 grid grid-cols-2 md:grid-cols-4 gap-4"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9 }}
-            >
-              {stats.map(({ label, value }, i) => (
-                <motion.div
-                  key={label}
-                  className="glass-card p-6 text-center group hover:border-electric/30 transition-all duration-300"
-                  whileHover={{ y: -4 }}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1 + i * 0.1 }}
-                >
-                  <div className="font-display text-4xl font-bold text-electric group-hover:text-shadow-neon">
-                    {value}
-                  </div>
-                  <div className="font-body text-sm text-white/40 mt-1">{label}</div>
-                </motion.div>
-              ))}
-            </motion.div>
+        <div className="hero__content">
+          <div className="hero__eyebrow">
+            <div className="hero__eyebrow-line" />
+            <span>Independent Software Engineer</span>
           </div>
 
-          {/* Scroll indicator */}
-          <motion.div
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            <span className="font-mono text-[9px] text-white/20 tracking-widest uppercase">Scroll</span>
-            <div className="w-px h-12 bg-gradient-to-b from-electric/40 to-transparent" />
-          </motion.div>
-        </section>
+          <h1 className="hero__name">
+            Allan<br />
+            <span>Marimo</span>
+          </h1>
 
-        {/* ABOUT SECTION */}
-        <section className="py-32 relative">
-          <div className="absolute inset-0 grid-bg opacity-20" />
-          <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-            <div className="grid lg:grid-cols-2 gap-16 items-start">
-              <div>
-                <motion.div
-                  className="font-mono text-xs text-electric/60 tracking-widest uppercase mb-3"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                >
-                  About Me
-                </motion.div>
-                <motion.h2
-                  className="font-display text-4xl md:text-5xl font-bold"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                >
-                  Independent Engineer
-                  <br />
-                  <span className="text-electric">Building What Matters</span>
-                </motion.h2>
+          <p className="hero__sub">
+            System Architect &amp; Cloud Specialist — Zimbabwe 🇿🇼<br />
+            <em>"We build simplicity for users. Complexity is our responsibility."</em>
+          </p>
 
-                <motion.p
-                  className="mt-6 text-white/50 leading-relaxed"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 }}
-                >
-                  I am an independent software engineer and system architect with deep expertise
-                  in cloud infrastructure, automation workflows, and full-stack development.
-                  I specialise in building solutions that are not just functional — but resilient,
-                  scalable, and built to last in production environments.
-                </motion.p>
+          <div className="hero__actions">
+            <Link to="/contact" className="btn btn--primary">
+              <span>Let's Work</span><span className="btn__arrow">→</span>
+            </Link>
+            <Link to="/skills" className="btn btn--outline">
+              <span>View Stack</span>
+            </Link>
+          </div>
+        </div>
 
-                <motion.p
-                  className="mt-4 text-white/50 leading-relaxed"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3 }}
-                >
-                  Whether it's an offline-first mobile data collection system deployed on a 
-                  secured Ubuntu VPS, a school management platform serving hundreds of students, 
-                  or an automated business workflow — I engineer solutions from architecture to 
-                  deployment, and I own the entire lifecycle.
-                </motion.p>
-              </div>
+        {/* 3D Coder illustration */}
+        <div className="hero__scene">
+          <img src={coderSvg} alt="Developer at workstation with side lighting" className="hero__coder" />
+          {/* Side light effects */}
+          <div className="hero__light hero__light--gold" aria-hidden="true" />
+          <div className="hero__light hero__light--blue" aria-hidden="true" />
+        </div>
 
-              <div className="grid grid-cols-1 gap-4">
-                {[
-                  {
-                    icon: '🏗️',
-                    title: 'System Architect',
-                    desc: 'I design full system blueprints before writing a single line of code.',
-                  },
-                  {
-                    icon: '☁️',
-                    title: 'Cloud & VPS Specialist',
-                    desc: 'Production-grade deployments on Ubuntu VPS with Nginx, Docker & HTTPS.',
-                  },
-                  {
-                    icon: '🤖',
-                    title: 'Automation Engineer',
-                    desc: 'n8n workflows, API orchestration, zero-touch business process automation.',
-                  },
-                  {
-                    icon: '📱',
-                    title: 'Offline-First Mobile Dev',
-                    desc: 'React Native apps that work seamlessly without internet connectivity.',
-                  },
-                ].map(({ icon, title, desc }, i) => (
-                  <motion.div
-                    key={title}
-                    className="glass-card p-5 flex gap-4 hover:border-electric/25 transition-all duration-300 group"
-                    initial={{ opacity: 0, x: 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
-                    whileHover={{ x: 4 }}
-                  >
-                    <div className="text-2xl">{icon}</div>
-                    <div>
-                      <div className="font-display font-semibold text-white group-hover:text-electric transition-colors">
-                        {title}
-                      </div>
-                      <div className="text-sm text-white/40 mt-1">{desc}</div>
-                    </div>
-                  </motion.div>
+        {/* Scroll indicator */}
+        <div className="hero__scroll">
+          <span>Scroll</span>
+          <div className="hero__scroll-line" />
+        </div>
+      </section>
+
+      {/* ══ STATS RIBBON ══ */}
+      <div className="stats-ribbon">
+        <StatCell target={5}   suffix="+" label="Years Experience" />
+        <StatCell target={30}  suffix="+" label="Projects Shipped" />
+        <StatCell target={16}  suffix=""  label="Technologies" />
+        <StatCell target={100} suffix="%" label="Uptime Obsession" />
+      </div>
+
+      {/* ══ ABOUT ══ */}
+      <section className="section about" id="about">
+        <div className="about__grid">
+          <div className="about__image-col reveal-left">
+            <div className="about__frame">
+              <img src={coderSvg} alt="Allan Marimo at his workstation" className="about__img" />
+              <div className="about__frame-border" />
+              <div className="about__badge">Zimbabwe 🇿🇼</div>
+            </div>
+          </div>
+          <div className="about__text-col">
+            <div className="section-tag reveal">
+              <div className="section-tag__line" />
+              <span className="section-tag__text">About Me</span>
+            </div>
+            <h2 className="section-title reveal" style={{ transitionDelay: '.1s' }}>
+              WHO I <span>AM</span>
+            </h2>
+            <blockquote className="about__quote reveal" style={{ transitionDelay: '.2s' }}>
+              "We build simplicity for users.<br />Complexity is our responsibility."
+            </blockquote>
+            <p className="section-body reveal" style={{ transitionDelay: '.3s' }}>
+              I'm Allan Marimo — an independent software engineer, system architect, and cloud specialist.
+              I design and ship production-grade systems end-to-end: from pixel-perfect frontends to
+              hardened VPS infrastructure with SSL, Docker, and zero-downtime deployments.
+            </p>
+            <p className="section-body reveal" style={{ transitionDelay: '.4s', marginTop: '1rem' }}>
+              Based in Zimbabwe, available globally for remote freelance, consulting, or full-time roles.
+            </p>
+            <div className="about__pills reveal" style={{ transitionDelay: '.5s' }}>
+              {['Full-Stack Dev','Cloud Specialist','System Architect','DevOps','API Design','Linux/VPS'].map(p => (
+                <span key={p} className="pill">{p}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══ WHAT I DO — 3 image cards ══ */}
+      <section className="section section--dark what-i-do">
+        <div className="section-tag reveal">
+          <div className="section-tag__line" />
+          <span className="section-tag__text">What I Do</span>
+        </div>
+        <h2 className="section-title reveal" style={{ transitionDelay: '.1s' }}>
+          CORE <span>SERVICES</span>
+        </h2>
+        <div className="services-grid">
+          {/* Card 1 */}
+          <div className="service-card reveal">
+            <div className="service-card__img-wrap">
+              <img src={laptopSvg} alt="Full-stack web development" className="service-card__img" />
+              <div className="service-card__glow service-card__glow--blue" />
+            </div>
+            <div className="service-card__body">
+              <span className="service-card__num">01</span>
+              <h3 className="service-card__title">Full-Stack Development</h3>
+              <p className="service-card__desc">
+                React + TypeScript frontends paired with FastAPI backends.
+                Clean, typed, performant, and production-ready from day one.
+              </p>
+              <div className="service-card__tags">
+                {['React','TypeScript','FastAPI','Python'].map(t => (
+                  <span key={t} className="pill">{t}</span>
                 ))}
               </div>
             </div>
           </div>
-        </section>
 
-        {/* TECH STACK MARQUEE */}
-        <section className="py-16 border-y border-white/5 overflow-hidden">
-          <div className="font-mono text-center text-xs text-white/20 tracking-widest uppercase mb-8">
-            Tech Stack
-          </div>
-          <div className="flex gap-12 animate-[marquee_20s_linear_infinite] whitespace-nowrap">
-            {[...techLogos, ...techLogos].map(({ name, icon }, i) => (
-              <div
-                key={i}
-                className="inline-flex items-center gap-2 text-white/30 hover:text-electric transition-colors shrink-0"
-              >
-                <span className="text-xl">{icon}</span>
-                <span className="font-mono text-sm">{name}</span>
-              </div>
-            ))}
-          </div>
-
-          <style>{`
-            @keyframes marquee {
-              from { transform: translateX(0); }
-              to { transform: translateX(-50%); }
-            }
-          `}</style>
-        </section>
-
-        {/* CTA SECTION */}
-        <section className="py-32 relative overflow-hidden">
-          <div
-            className="absolute inset-0 opacity-10"
-            style={{
-              background: 'radial-gradient(ellipse 60% 60% at 50% 50%, #00d4ff, transparent)',
-            }}
-          />
-          <div className="max-w-3xl mx-auto px-6 text-center relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-            >
-              <div className="font-mono text-xs text-electric/60 tracking-widest uppercase mb-4">
-                Ready to Build?
-              </div>
-              <h2 className="font-display text-4xl md:text-5xl font-bold">
-                Have a system in mind?
-                <br />
-                <span className="text-electric">Let's architect it.</span>
-              </h2>
-              <p className="mt-6 text-white/40 text-base">
-                From idea to deployed, production-ready system — let's build something powerful together.
+          {/* Card 2 */}
+          <div className="service-card reveal" style={{ transitionDelay: '.15s' }}>
+            <div className="service-card__img-wrap">
+              <img src={serverSvg} alt="Cloud and DevOps infrastructure" className="service-card__img" />
+              <div className="service-card__glow service-card__glow--gold" />
+            </div>
+            <div className="service-card__body">
+              <span className="service-card__num">02</span>
+              <h3 className="service-card__title">Cloud &amp; DevOps</h3>
+              <p className="service-card__desc">
+                Ubuntu VPS setup, Docker Compose orchestration, Nginx reverse proxy,
+                auto-renewing SSL, UFW firewall, and zero-downtime deployments.
               </p>
-              <Link to="/contact" className="btn-primary inline-flex items-center gap-2 mt-10">
-                Start a Project <FiArrowRight />
-              </Link>
-            </motion.div>
+              <div className="service-card__tags">
+                {['Docker','Nginx','Ubuntu','Certbot'].map(t => (
+                  <span key={t} className="pill">{t}</span>
+                ))}
+              </div>
+            </div>
           </div>
-        </section>
-      </div>
-    </PageTransition>
+
+          {/* Card 3 */}
+          <div className="service-card reveal" style={{ transitionDelay: '.3s' }}>
+            <div className="service-card__img-wrap">
+              <img src={globeSvg} alt="System architecture and API design" className="service-card__img" />
+              <div className="service-card__glow service-card__glow--green" />
+            </div>
+            <div className="service-card__body">
+              <span className="service-card__num">03</span>
+              <h3 className="service-card__title">System Architecture</h3>
+              <p className="service-card__desc">
+                API design, database modelling, microservice layouts, and security
+                hardening. I architect for scale and own the full delivery chain.
+              </p>
+              <div className="service-card__tags">
+                {['REST APIs','PostgreSQL','Redis','Pydantic'].map(t => (
+                  <span key={t} className="pill">{t}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══ PROJECTS ══ */}
+      <section className="section projects" id="projects">
+        <div className="section-tag reveal">
+          <div className="section-tag__line" />
+          <span className="section-tag__text">Selected Work</span>
+        </div>
+        <h2 className="section-title reveal" style={{ transitionDelay: '.1s' }}>
+          PROJECT<span>S</span>
+        </h2>
+        <p className="section-body reveal" style={{ transitionDelay: '.2s' }}>
+          Production systems built with precision and deployed with confidence.
+        </p>
+
+        <div className="projects-grid">
+          {PROJECTS.map((p, i) => (
+            <div key={p.num} className="project-card reveal" style={{ transitionDelay: `${i * 0.1}s` }}>
+              <div className="project-card__num">{p.num}</div>
+              <div className="project-card__tag">{p.tag}</div>
+              <h3 className="project-card__name">{p.name}</h3>
+              <p className="project-card__desc">{p.desc}</p>
+              <div className="project-card__stack">
+                {p.stack.map(s => <span key={s} className="stack-tag">{s}</span>)}
+              </div>
+              <a href={p.link} className="project-card__link" target="_blank" rel="noreferrer">
+                {p.linkLabel} →
+              </a>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ══ EXPERIENCE ══ */}
+      <section className="section section--dark experience" id="experience">
+        <div className="experience__inner">
+          <div>
+            <div className="section-tag reveal">
+              <div className="section-tag__line" />
+              <span className="section-tag__text">Career</span>
+            </div>
+            <h2 className="section-title reveal" style={{ transitionDelay: '.1s' }}>
+              EXPERI<span>ENCE</span>
+            </h2>
+            <div className="timeline">
+              {EXPERIENCE.map((e, i) => (
+                <div key={e.role} className="timeline__item exp-item" style={{ transitionDelay: `${i * 0.2}s` }}>
+                  <div className="timeline__dot" />
+                  <div className="timeline__year">{e.year}</div>
+                  <div className="timeline__role">{e.role}</div>
+                  <div className="timeline__company">{e.company}</div>
+                  <p className="timeline__desc">{e.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          {/* Right: server illustration + values */}
+          <div className="experience__right">
+            <div className="experience__server-wrap reveal-right">
+              <img src={serverSvg} alt="Server infrastructure" className="experience__server" />
+              <div className="experience__server-glow" />
+            </div>
+            <div className="values">
+              {VALUES.map((v, i) => (
+                <div key={v.title} className="value-item reveal" style={{ transitionDelay: `${i * 0.1}s` }}>
+                  <span className="value-item__title">{v.title}</span>
+                  <p className="value-item__desc">{v.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══ CTA BANNER ══ */}
+      <section className="cta-banner">
+        <div className="cta-banner__bg" />
+        <div className="cta-banner__content">
+          <h2 className="cta-banner__title reveal">
+            READY TO <span>BUILD</span>?
+          </h2>
+          <p className="cta-banner__sub reveal" style={{ transitionDelay: '.1s' }}>
+            Open for freelance projects, remote roles, and architecture consulting.
+          </p>
+          <div className="cta-banner__actions reveal" style={{ transitionDelay: '.2s' }}>
+            <Link to="/contact" className="btn btn--primary">
+              <span>Start a Project</span><span className="btn__arrow">→</span>
+            </Link>
+            <a href="https://github.com/allan4931" target="_blank" rel="noreferrer" className="btn btn--outline">
+              <span>GitHub</span>
+            </a>
+          </div>
+        </div>
+      </section>
+    </>
   )
 }
+
+/* ── DATA ── */
+const PROJECTS = [
+  {
+    num: '01', tag: 'Full-Stack / DevOps', name: 'Allan Marimo Portfolio',
+    desc: 'Production-ready personal portfolio — React + FastAPI + Docker + Nginx on Ubuntu VPS with SSL and CORS hardening.',
+    stack: ['React 18','TypeScript','FastAPI','Docker','Nginx'],
+    link: 'https://github.com/allan4931/allan-marimo-portfolio', linkLabel: 'View on GitHub',
+  },
+  {
+    num: '02', tag: 'Backend / API', name: 'Contact Service API',
+    desc: 'Hardened RESTful contact endpoint with Gmail SMTP, Pydantic v2 validation, rate-limit middleware, and zero-spam policy.',
+    stack: ['FastAPI','Python 3.12','Pydantic v2','Gmail SMTP'],
+    link: '#contact', linkLabel: 'See live',
+  },
+  {
+    num: '03', tag: 'Infrastructure', name: 'VPS Deployment Stack',
+    desc: 'Ubuntu 24.04 server setup: Docker Compose, Nginx reverse proxy, auto-renewing SSL, UFW firewall, SSH hardening.',
+    stack: ['Ubuntu 24.04','Docker Compose','Certbot','UFW'],
+    link: 'https://github.com/allan4931/allan-marimo-portfolio', linkLabel: 'View Config',
+  },
+  {
+    num: '04', tag: 'Frontend / UX', name: 'Design System UI',
+    desc: 'Component library with glassmorphism utilities, custom cursor, page transitions, and animation system built on Tailwind + Framer Motion.',
+    stack: ['React','Tailwind','Framer Motion','TypeScript'],
+    link: '/skills', linkLabel: 'Explore Stack',
+  },
+]
+
+const EXPERIENCE = [
+  {
+    year: '2023 – Present', role: 'Independent Software Engineer',
+    company: 'Freelance / Self-Employed — Zimbabwe',
+    desc: 'Designing and delivering end-to-end systems for clients — from architecture to production deployment, specialising in React + FastAPI stacks and cloud infrastructure.',
+  },
+  {
+    year: '2022 – 2023', role: 'Full-Stack Developer',
+    company: 'Client Projects — Remote',
+    desc: 'Built and maintained multiple client web applications. Introduced Docker-based deployment pipelines that cut deployment time by 60%.',
+  },
+  {
+    year: '2021 – 2022', role: 'Junior Web Developer',
+    company: 'Entry Level — Zimbabwe',
+    desc: 'Started professional career building responsive frontends and REST APIs. Deep-dived into Linux server administration and networking fundamentals.',
+  },
+]
+
+const VALUES = [
+  { title: 'Precision First', desc: 'Every line is deliberate. I don\'t ship what I can\'t explain or defend.' },
+  { title: 'Own the Full Stack', desc: 'From Figma mockup to nginx.conf — I understand and own the entire delivery chain.' },
+  { title: 'Shipped > Perfect', desc: 'Engineering rigour balanced with product velocity — quality ships on a deadline.' },
+]

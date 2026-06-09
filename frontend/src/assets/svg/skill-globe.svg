@@ -1,0 +1,105 @@
+<svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="globeGrad" cx="35%" cy="30%" r="65%">
+      <stop offset="0%"  stop-color="#2a2218" stop-opacity="1"/>
+      <stop offset="60%" stop-color="#111" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#050505" stop-opacity="1"/>
+    </radialGradient>
+    <radialGradient id="globeGlow" cx="35%" cy="30%" r="60%">
+      <stop offset="0%"  stop-color="#D4AF37" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#D4AF37" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="globeSheen" cx="30%" cy="25%" r="40%">
+      <stop offset="0%"  stop-color="#fff" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="shadow3" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"  stop-color="#000" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="globeClip">
+      <circle cx="150" cy="148" r="108"/>
+    </clipPath>
+  </defs>
+
+  <!-- Shadow under sphere -->
+  <ellipse cx="150" cy="285" rx="90" ry="14" fill="url(#shadow3)"/>
+
+  <!-- Globe base sphere -->
+  <circle cx="150" cy="148" r="108" fill="url(#globeGrad)"/>
+
+  <!-- Globe latitude/longitude lines -->
+  <g clip-path="url(#globeClip)" opacity="0.18">
+    <!-- Latitude lines -->
+    <ellipse cx="150" cy="148" rx="108" ry="28" stroke="rgba(212,175,55,0.6)" stroke-width="0.8" fill="none"/>
+    <ellipse cx="150" cy="148" rx="108" ry="60" stroke="rgba(212,175,55,0.5)" stroke-width="0.8" fill="none"/>
+    <ellipse cx="150" cy="148" rx="108" ry="92" stroke="rgba(212,175,55,0.4)" stroke-width="0.8" fill="none"/>
+    <!-- Vertical lines -->
+    <ellipse cx="150" cy="148" rx="28"  ry="108" stroke="rgba(212,175,55,0.5)" stroke-width="0.8" fill="none"/>
+    <ellipse cx="150" cy="148" rx="60"  ry="108" stroke="rgba(212,175,55,0.4)" stroke-width="0.8" fill="none"/>
+    <ellipse cx="150" cy="148" rx="92"  ry="108" stroke="rgba(212,175,55,0.35)" stroke-width="0.8" fill="none"/>
+    <!-- Equator bright -->
+    <line x1="42" y1="148" x2="258" y2="148" stroke="rgba(212,175,55,0.7)" stroke-width="1" fill="none"/>
+    <!-- Prime meridian -->
+    <line x1="150" y1="40" x2="150" y2="256" stroke="rgba(212,175,55,0.6)" stroke-width="1" fill="none"/>
+  </g>
+
+  <!-- Globe glow overlay -->
+  <circle cx="150" cy="148" r="108" fill="url(#globeGlow)"/>
+  <!-- Sheen highlight -->
+  <circle cx="150" cy="148" r="108" fill="url(#globeSheen)"/>
+
+  <!-- Tech skill nodes on the globe -->
+  <!-- React -->
+  <circle cx="108" cy="118" r="16" fill="rgba(97,218,251,0.12)" stroke="rgba(97,218,251,0.45)" stroke-width="1"/>
+  <text x="101" y="122" font-family="monospace" font-size="8" fill="rgba(97,218,251,0.9)">React</text>
+
+  <!-- Python -->
+  <circle cx="190" cy="105" r="16" fill="rgba(255,222,87,0.1)" stroke="rgba(255,222,87,0.4)" stroke-width="1"/>
+  <text x="181" y="109" font-family="monospace" font-size="8" fill="rgba(255,222,87,0.85)">Python</text>
+
+  <!-- Docker -->
+  <circle cx="148" cy="180" r="16" fill="rgba(79,195,247,0.1)" stroke="rgba(79,195,247,0.4)" stroke-width="1"/>
+  <text x="140" y="184" font-family="monospace" font-size="8" fill="rgba(79,195,247,0.85)">Docker</text>
+
+  <!-- Nginx -->
+  <circle cx="92"  cy="170" r="14" fill="rgba(152,195,121,0.1)" stroke="rgba(152,195,121,0.4)" stroke-width="1"/>
+  <text x="87"  y="174" font-family="monospace" font-size="7" fill="rgba(152,195,121,0.85)">Nginx</text>
+
+  <!-- FastAPI -->
+  <circle cx="205" cy="162" r="16" fill="rgba(9,121,105,0.15)" stroke="rgba(9,180,155,0.4)" stroke-width="1"/>
+  <text x="196" y="166" font-family="monospace" font-size="7" fill="rgba(0,210,180,0.85)">FastAPI</text>
+
+  <!-- TypeScript -->
+  <circle cx="160" cy="130" r="14" fill="rgba(49,120,198,0.15)" stroke="rgba(49,120,198,0.5)" stroke-width="1"/>
+  <text x="151" y="134" font-family="monospace" font-size="7" fill="rgba(79,150,230,0.9)">TS</text>
+
+  <!-- PostgreSQL -->
+  <circle cx="124" cy="200" r="13" fill="rgba(50,103,145,0.15)" stroke="rgba(50,130,185,0.35)" stroke-width="1"/>
+  <text x="115" y="204" font-family="monospace" font-size="6" fill="rgba(80,155,210,0.8)">Postgres</text>
+
+  <!-- Redis -->
+  <circle cx="218" cy="130" r="12" fill="rgba(188,28,28,0.12)" stroke="rgba(220,50,50,0.35)" stroke-width="1"/>
+  <text x="211" y="134" font-family="monospace" font-size="7" fill="rgba(230,80,80,0.85)">Redis</text>
+
+  <!-- Connection lines between nodes -->
+  <line x1="124" y1="118" x2="160" y2="130" stroke="rgba(212,175,55,0.2)" stroke-width="0.8" stroke-dasharray="3,3"/>
+  <line x1="174" y1="130" x2="190" y2="113" stroke="rgba(212,175,55,0.2)" stroke-width="0.8" stroke-dasharray="3,3"/>
+  <line x1="160" y1="144" x2="148" y2="164" stroke="rgba(212,175,55,0.2)" stroke-width="0.8" stroke-dasharray="3,3"/>
+  <line x1="204" y1="130" x2="206" y2="146" stroke="rgba(212,175,55,0.2)" stroke-width="0.8" stroke-dasharray="3,3"/>
+  <line x1="106" y1="132" x2="106" y2="156" stroke="rgba(212,175,55,0.2)" stroke-width="0.8" stroke-dasharray="3,3"/>
+  <line x1="136" y1="164" x2="130" y2="187" stroke="rgba(212,175,55,0.2)" stroke-width="0.8" stroke-dasharray="3,3"/>
+
+  <!-- Outer orbit ring -->
+  <ellipse cx="150" cy="148" rx="128" ry="32" stroke="rgba(212,175,55,0.12)" stroke-width="1" fill="none" stroke-dasharray="6,4"/>
+  <!-- Orbit dot (satellite) -->
+  <circle cx="278" cy="148" r="5" fill="rgba(212,175,55,0.7)" filter="url(#globeGlow)"/>
+
+  <!-- Globe rim light (gold left) -->
+  <path d="M59 100 Q44 148 62 196" stroke="rgba(212,175,55,0.35)" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- Globe rim light (blue right) -->
+  <path d="M241 100 Q256 148 238 196" stroke="rgba(79,195,247,0.2)" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+  <!-- Outer circle border -->
+  <circle cx="150" cy="148" r="108" stroke="rgba(212,175,55,0.15)" stroke-width="1" fill="none"/>
+</svg>

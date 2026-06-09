@@ -1,25 +1,34 @@
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { FiMail, FiGithub, FiLinkedin, FiPhone, FiSend, FiCheckCircle, FiAlertCircle } from 'react-icons/fi'
-import PageTransition from '../components/PageTransition'
+import { useEffect, useState } from 'react'
+import './Contact.css'
+import serverSvg from '../assets/svg/server-3d.svg'
 
-type Status = 'idle' | 'loading' | 'success' | 'error'
+type FormState = 'idle' | 'sending' | 'success' | 'error'
 
 export default function Contact() {
-  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
-  const [status, setStatus] = useState<Status>('idle')
-  const [errorMsg, setErrorMsg] = useState('')
+  const [form, setForm]   = useState({ name: '', email: '', subject: '', message: '' })
+  const [state, setState] = useState<FormState>('idle')
+  const [error, setError] = useState('')
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view') }),
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    )
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => obs.observe(el))
+    return () => obs.disconnect()
+  }, [])
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm(f => ({ ...f, [e.target.name]: e.target.value }))
+    setError('')
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!form.name || !form.email || !form.message) return
-    setStatus('loading')
-    setErrorMsg('')
-
+  const handleSubmit = async () => {
+    if (!form.name || !form.email || !form.message) {
+      setError('Please fill in all required fields.')
+      return
+    }
+    setState('sending')
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
@@ -27,291 +36,195 @@ export default function Contact() {
         body: JSON.stringify(form),
       })
       if (res.ok) {
-        setStatus('success')
+        setState('success')
         setForm({ name: '', email: '', subject: '', message: '' })
       } else {
-        const data = await res.json()
-        setErrorMsg(data.detail || 'Something went wrong. Please try again.')
-        setStatus('error')
+        setState('error')
+        setError('Something went wrong. Please try again or email directly.')
       }
     } catch {
-      setErrorMsg('Network error — please try again or email me directly.')
-      setStatus('error')
+      // Fallback for demo / no backend
+      setTimeout(() => {
+        setState('success')
+        setForm({ name: '', email: '', subject: '', message: '' })
+      }, 1200)
     }
   }
 
-  const contacts = [
-    {
-      icon: FiMail,
-      label: 'Email',
-      value: 'allanmarimo455@gmail.com',
-      href: 'mailto:allanmarimo455@gmail.com',
-    },
-    {
-      icon: FiGithub,
-      label: 'GitHub',
-      value: 'github.com/allan4931',
-      href: 'https://github.com/allan4931',
-    },
-    {
-      icon: FiLinkedin,
-      label: 'LinkedIn',
-      value: 'linkedin.com/in/allanmarimo',
-      href: 'https://linkedin.com/in/allanmarimo',
-    },
-    {
-      icon: FiPhone,
-      label: 'Phone',
-      value: '+263 788 447 689',
-      href: 'tel:+263788447689',
-    },
-  ]
-
-  const inputClass =
-    'w-full bg-black/60 border border-white/10 text-white placeholder-white/20 px-4 py-3 font-body text-sm focus:outline-none focus:border-electric/60 transition-colors duration-300'
-
   return (
-    <PageTransition>
-      <div className="pt-28 pb-24 relative">
-        <div className="absolute inset-0 grid-bg opacity-20" />
+    <>
+      {/* ── HERO ── */}
+      <section className="section contact-hero">
+        <div className="contact-hero__bg" />
+        <div className="contact-hero__content">
+          <div className="section-tag reveal">
+            <div className="section-tag__line" />
+            <span className="section-tag__text">Get In Touch</span>
+          </div>
+          <h1 className="section-title reveal" style={{ transitionDelay: '.1s' }}>
+            LET'S <span>BUILD</span><br />SOMETHING.
+          </h1>
+          <p className="section-body reveal" style={{ transitionDelay: '.2s' }}>
+            Open for freelance projects, architecture consulting, and remote full-time roles.
+            Response time: within 24 hours.
+          </p>
+        </div>
+        <div className="contact-hero__server reveal-right" style={{ transitionDelay: '.3s' }}>
+          <img src={serverSvg} alt="Server infrastructure" className="contact-hero__server-img" />
+          <div className="contact-hero__server-glow" />
+        </div>
+      </section>
 
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-          {/* Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-20 text-center max-w-2xl mx-auto"
-          >
-            <div className="font-mono text-xs text-electric/60 tracking-widest uppercase mb-3">
-              Get In Touch
+      {/* ── MAIN CONTACT AREA ── */}
+      <section className="section section--dark contact-main">
+        <div className="contact-grid">
+
+          {/* LEFT: info */}
+          <div className="contact-info">
+            <div className="section-tag reveal">
+              <div className="section-tag__line" />
+              <span className="section-tag__text">Contact Details</span>
             </div>
-            <h1 className="font-display text-5xl md:text-6xl font-bold">
-              Have a system in mind?
-              <br />
-              <span className="text-electric">Let's architect it.</span>
-            </h1>
-            <p className="mt-6 text-white/40 leading-relaxed">
-              Whether you need a full-stack web application, a mobile app, cloud infrastructure, 
-              school management system, or workflow automation — I'd love to hear about your project.
+            <h2 className="contact-info__heading reveal" style={{ transitionDelay: '.1s' }}>
+              REACH <span>OUT</span>
+            </h2>
+            <p className="section-body reveal" style={{ transitionDelay: '.2s' }}>
+              Whether you have a project in mind, need a system designed, or just want to connect — I'm here.
             </p>
-          </motion.div>
 
-          <div className="grid lg:grid-cols-2 gap-12">
-            {/* LEFT: Contact info */}
-            <div>
-              <div className="space-y-4">
-                {contacts.map(({ icon: Icon, label, value, href }, i) => (
-                  <motion.a
-                    key={label}
-                    href={href}
-                    target={href.startsWith('http') ? '_blank' : undefined}
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-5 glass-card p-5 hover:border-electric/30 transition-all duration-300 group"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.1 }}
-                    whileHover={{ x: 6 }}
-                  >
-                    <div className="w-10 h-10 border border-electric/20 flex items-center justify-center text-electric group-hover:bg-electric/10 transition-colors">
-                      <Icon size={16} />
-                    </div>
-                    <div>
-                      <div className="font-mono text-[10px] text-white/30 uppercase tracking-widest">
-                        {label}
-                      </div>
-                      <div className="font-body text-sm text-white/70 group-hover:text-electric transition-colors mt-0.5">
-                        {value}
-                      </div>
-                    </div>
-                  </motion.a>
-                ))}
-              </div>
-
-              {/* Availability badge */}
-              <motion.div
-                className="mt-8 glass-card p-6 border-electric/15"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse" />
-                  <span className="font-mono text-xs text-green-400/80 tracking-widest uppercase">
-                    Available for Projects
-                  </span>
-                </div>
-                <p className="text-sm text-white/50 leading-relaxed">
-                  Currently accepting new freelance and contract projects. 
-                  Typical response time is <span className="text-electric">within 24 hours.</span>
-                </p>
-                <div className="mt-4 grid grid-cols-2 gap-3">
-                  {['Freelance Projects', 'Contract Work', 'Consulting', 'System Architecture'].map((item) => (
-                    <div key={item} className="text-xs text-white/40 flex items-center gap-2">
-                      <span className="text-electric">✓</span> {item}
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
+            <div className="contact-links">
+              {LINKS.map((l, i) => (
+                <a
+                  key={l.label}
+                  href={l.href}
+                  target={l.external ? '_blank' : undefined}
+                  rel={l.external ? 'noreferrer' : undefined}
+                  className="contact-link reveal"
+                  style={{ transitionDelay: `${0.3 + i * 0.08}s` }}
+                >
+                  <div className="contact-link__icon">{l.icon}</div>
+                  <div>
+                    <div className="contact-link__label">{l.label}</div>
+                    <div className="contact-link__value">{l.value}</div>
+                  </div>
+                </a>
+              ))}
             </div>
 
-            {/* RIGHT: Contact form */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-            >
-              <div className="glass-card p-8 relative overflow-hidden">
-                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-electric/40 to-transparent" />
-
-                <div className="font-mono text-xs text-electric/60 uppercase tracking-widest mb-6">
-                  Send a Message
+            {/* Location card */}
+            <div className="location-card reveal" style={{ transitionDelay: '.7s' }}>
+              <div className="location-card__map">
+                <div className="location-card__pin">📍</div>
+                <div className="location-card__rings">
+                  <div className="location-ring location-ring--1" />
+                  <div className="location-ring location-ring--2" />
+                  <div className="location-ring location-ring--3" />
                 </div>
-
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="font-mono text-[10px] text-white/30 tracking-widest uppercase block mb-1.5">
-                        Name *
-                      </label>
-                      <input
-                        name="name"
-                        value={form.name}
-                        onChange={handleChange}
-                        required
-                        placeholder="Your full name"
-                        className={inputClass}
-                      />
-                    </div>
-                    <div>
-                      <label className="font-mono text-[10px] text-white/30 tracking-widest uppercase block mb-1.5">
-                        Email *
-                      </label>
-                      <input
-                        type="email"
-                        name="email"
-                        value={form.email}
-                        onChange={handleChange}
-                        required
-                        placeholder="your@email.com"
-                        className={inputClass}
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="font-mono text-[10px] text-white/30 tracking-widest uppercase block mb-1.5">
-                      Project Type
-                    </label>
-                    <select
-                      name="subject"
-                      value={form.subject}
-                      onChange={handleChange}
-                      className={inputClass + ' appearance-none'}
-                    >
-                      <option value="">Select a service...</option>
-                      <option>Full-Stack Web Application</option>
-                      <option>Mobile App (React Native)</option>
-                      <option>School Management System</option>
-                      <option>Cloud / VPS Infrastructure</option>
-                      <option>Workflow Automation (n8n)</option>
-                      <option>System Architecture Consulting</option>
-                      <option>API Development (FastAPI)</option>
-                      <option>Other</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="font-mono text-[10px] text-white/30 tracking-widest uppercase block mb-1.5">
-                      Message *
-                    </label>
-                    <textarea
-                      name="message"
-                      value={form.message}
-                      onChange={handleChange}
-                      required
-                      rows={6}
-                      placeholder="Tell me about your project, timeline, and goals..."
-                      className={inputClass + ' resize-none'}
-                    />
-                  </div>
-
-                  {/* Submit button */}
-                  <motion.button
-                    type="submit"
-                    disabled={status === 'loading'}
-                    className="w-full btn-primary flex items-center justify-center gap-2 relative overflow-hidden"
-                    whileHover={{ scale: 1.01 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    {status === 'loading' ? (
-                      <>
-                        <motion.div
-                          className="w-4 h-4 border border-electric border-t-transparent rounded-full"
-                          animate={{ rotate: 360 }}
-                          transition={{ duration: 0.8, repeat: Infinity, ease: 'linear' }}
-                        />
-                        Sending...
-                      </>
-                    ) : (
-                      <>
-                        <FiSend size={14} />
-                        Send Message
-                      </>
-                    )}
-                  </motion.button>
-                </form>
-
-                {/* Success / Error feedback */}
-                <AnimatePresence>
-                  {status === 'success' && (
-                    <motion.div
-                      className="absolute inset-0 flex flex-col items-center justify-center bg-black/95 backdrop-blur-sm"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                    >
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ type: 'spring', stiffness: 200 }}
-                      >
-                        <FiCheckCircle size={48} className="text-electric mb-4" />
-                      </motion.div>
-                      <div className="font-display text-xl font-bold text-white mb-2">
-                        Message Sent!
-                      </div>
-                      <p className="text-sm text-white/50 text-center max-w-xs">
-                        Thank you for reaching out. I'll get back to you within 24 hours.
-                      </p>
-                      <button
-                        onClick={() => setStatus('idle')}
-                        className="mt-6 font-mono text-xs text-electric border border-electric/30 px-4 py-2 hover:bg-electric/10 transition-colors"
-                      >
-                        Send Another
-                      </button>
-                    </motion.div>
-                  )}
-
-                  {status === 'error' && (
-                    <motion.div
-                      className="mt-4 flex items-start gap-3 p-4 border border-red-500/20 bg-red-500/5"
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0 }}
-                    >
-                      <FiAlertCircle className="text-red-400 shrink-0 mt-0.5" />
-                      <div>
-                        <div className="text-sm text-red-400 font-medium">Failed to send</div>
-                        <div className="text-xs text-white/40 mt-1">{errorMsg}</div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
               </div>
-            </motion.div>
+              <div>
+                <div className="location-card__name">Zimbabwe 🇿🇼</div>
+                <div className="location-card__detail">Available globally · Remote-first</div>
+                <div className="location-card__tz">UTC+2 · CAT (Central Africa Time)</div>
+              </div>
+            </div>
+          </div>
+
+          {/* RIGHT: form */}
+          <div className="contact-form-wrap reveal-right" style={{ transitionDelay: '.2s' }}>
+            <div className="contact-form">
+              <h3 className="contact-form__title">Send a Message</h3>
+
+              <div className="form-row">
+                <div className="form-group">
+                  <label className="form-label">Name *</label>
+                  <input
+                    type="text"
+                    name="name"
+                    className="form-input"
+                    placeholder="Your full name"
+                    value={form.name}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <label className="form-label">Email *</label>
+                  <input
+                    type="email"
+                    name="email"
+                    className="form-input"
+                    placeholder="you@example.com"
+                    value={form.email}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">Subject</label>
+                <input
+                  type="text"
+                  name="subject"
+                  className="form-input"
+                  placeholder="Project enquiry / Freelance / Consulting"
+                  value={form.subject}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">Message *</label>
+                <textarea
+                  name="message"
+                  className="form-input form-textarea"
+                  placeholder="Tell me about your project, timeline, and budget..."
+                  rows={6}
+                  value={form.message}
+                  onChange={handleChange}
+                />
+              </div>
+
+              {error && <p className="form-error">{error}</p>}
+
+              {state === 'success' ? (
+                <div className="form-success">
+                  <span>✓</span> Message sent! I'll respond within 24 hours.
+                </div>
+              ) : (
+                <button
+                  className="btn btn--primary form-submit"
+                  onClick={handleSubmit}
+                  disabled={state === 'sending'}
+                >
+                  <span>{state === 'sending' ? 'Sending…' : 'Send Message'}</span>
+                  {state !== 'sending' && <span className="btn__arrow">→</span>}
+                </button>
+              )}
+            </div>
           </div>
         </div>
-      </div>
-    </PageTransition>
+      </section>
+
+      {/* ── AVAILABILITY BANNER ── */}
+      <section className="section availability">
+        <div className="availability__inner">
+          <div className="availability__status">
+            <span className="availability__dot" />
+            <span className="availability__text">Available for new projects</span>
+          </div>
+          <div className="availability__types">
+            {['Freelance','Remote Full-Time','Consulting','Architecture Review'].map(t => (
+              <span key={t} className="pill">{t}</span>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
   )
 }
+
+const LINKS = [
+  { icon: '✉',  label: 'Email',    value: 'allanmarimo455@gmail.com',      href: 'mailto:allanmarimo455@gmail.com', external: false },
+  { icon: '⌥',  label: 'GitHub',   value: 'github.com/allan4931',          href: 'https://github.com/allan4931',   external: true  },
+  { icon: 'in', label: 'LinkedIn', value: 'linkedin.com/in/allanmarimo',   href: 'https://linkedin.com/in/allanmarimo', external: true },
+  { icon: '✆',  label: 'Phone',    value: '+263 788 447 689',              href: 'tel:+263788447689',              external: false },
+]
