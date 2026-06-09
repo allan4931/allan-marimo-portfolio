@@ -10,6 +10,7 @@ from email.mime.multipart import MIMEMultipart
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, EmailStr, field_validator
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
@@ -35,6 +36,8 @@ app.add_middleware(
     allow_methods=["POST", "GET"],
     allow_headers=["*"],
 )
+
+app.mount("/", StaticFiles(directory="static", html=True), name="static")
 
 # ─── Schema ─────────────────────────────────────────────────────
 class ContactForm(BaseModel):
