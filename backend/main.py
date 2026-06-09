@@ -37,8 +37,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.mount("/", StaticFiles(directory="static", html=True), name="static")
-
 # ─── Schema ─────────────────────────────────────────────────────
 class ContactForm(BaseModel):
     name:    str
@@ -122,3 +120,11 @@ async def contact(request: Request, form: ContactForm):
         return {"success": True, "message": "Message received (demo mode)."}
     except Exception as exc:
         raise HTTPException(status_code=500, detail="Failed to send email") from exc
+
+# ─── Serve frontend when a built app exists ───────────────────────
+backend_dir = os.path.dirname(__file__)
+static_dir = os.path.join(backend_dir, "static")
+if not os.path.isdir(static_dir):
+    static_dir = os.path.join(backend_dir, "..", "frontend", "dist")
+if os.path.isdir(static_dir):
+    app.mount("/", StaticFiles(directory=static_dir, html=True), name="static")
