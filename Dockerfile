@@ -8,19 +8,26 @@ RUN npm ci
 COPY frontend/ ./
 RUN npm run build
 
-# Build backend
+# Build backend with all dependencies
 FROM python:3.12-slim AS backend-builder
-WORKDIR /app/backend
+WORKDIR /app
 COPY backend/requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
-COPY backend/ ./
+COPY backend/ ./backend/
 
-# Final image: combine frontend static files with backend app
+# Final image: combine everything
 FROM python:3.12-slim
 WORKDIR /app
-COPY --from=backend-builder /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
-COPY --from=backend-builder /app/backend /app/backend
-COPY --from=frontend-builder /app/frontend/dist /app/backend/static
+
+# Copy frontend static files first
+COPY --from=frontend-builder /app/frontend/dist ./backend/static
+
+# Install Python dependencies in the final image
+COPY backend/requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy backend code
+COPY backend/ ./backend/
 
 WORKDIR /app/backend
 EXPOSE 8000
